@@ -1,8 +1,7 @@
 # MySQL.  Versions 5.0+ are recommended.
 #
 # Install the MYSQL driver
-#   gem install mysql2
-#
+#   sta
 # Ensure the MySQL gem is defined in your Gemfile
 #   gem 'mysql2'
 #
@@ -14,8 +13,8 @@ default: &default
   encoding: utf8
   pool: 5
   username: root
-  password:
-  socket: /var/run/mysqld/mysqld.sock
+  password: sql
+  socket:  /tmp/mysql.sock  
 
 development:
   <<: *default
@@ -50,5 +49,5 @@ test:
 production:
   <<: *default
   database: routenplaner_production
-  username: routenplaner
-  password: <%= ENV['ROUTENPLANER_DATABASE_PASSWORD'] %>
+  username: admin
+  password: sql
