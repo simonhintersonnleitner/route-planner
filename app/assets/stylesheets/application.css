@@ -1,5 +1,3 @@
-
-
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -12,20 +10,27 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
  *= require bootstrap.min
+ *= require_tree .
  *= require_self
  */
 
 
 .navbar{
-	padding-top: 100px;
-	background-color: #eb4726;
-	color: red;
+	padding-top: 30px;
+	padding-bottom: 10px;
 }
 
+.navbar-default .navbar-nav>li>a
+{
+	color: #fff;	
+}
 .navbar-default
 {
 	background-color: #eb4726;
-	color: red;
+}
+.input-group
+{
+	max-width: 250px;
+	margin: 5px;
 }
