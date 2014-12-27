@@ -15,10 +15,14 @@
  *= require_self
  */
 
+#logo {
+  float:left;
+  padding:35px 0px 0px 30px;
+  color:#fff;
+}
 
 .navbar{
-	padding-top: 30px;
-	padding-bottom: 10px;
+	padding:0px;
 }
 
 .navbar-default .navbar-nav>li>a
@@ -27,10 +31,64 @@
 }
 .navbar-default
 {
-	background-color: #eb4726;
+	background-color: #ed4514;
+  margin:0;
+  box-shadow:0px 0px 15px #666666;
+  border-bottom:0px;  
 }
+
 .input-group
 {
 	max-width: 250px;
 	margin: 5px;
+}
+
+.container {
+  width:95%;
+  position:relative;
+}
+
+#header .container {
+  height:125px;
+}
+
+div#navbar ul.main li {
+  height:100%;  
+}
+
+div#navbar ul.main li a {
+  padding-top:45px;
+  border-right:1px solid #ed4514;
+}
+
+div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
+  background:#ef5817;
+  height:100%;
+  border-bottom:5px solid #fe832c;
+  color:#fff;
+  border-right:1px solid #ed4514;
+}
+
+#header ul.main {
+  height:100%;
+  position:absolute;
+  left:150px;
+}
+
+#sidebar {
+  background:red;
+}
+
+#main {
+  background:green;
+}
+
+.container.content {
+  margin:0;
+  padding:0;
+  width:100%;
+}
+
+.clear {
+  clear:both;
 }

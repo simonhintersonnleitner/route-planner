@@ -7,38 +7,51 @@
 		<%= csrf_meta_tags %>
 	</head>
 	<body>
-		<nav class="navbar navbar-default navbar-static-top">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#">Routenplaner</a>
-				</div>
-				<div id="navbar" class="navbar-collapse collapse">
-					<ul class="nav navbar-nav">
-						<li><a href="#">Routenplaner</a></li>
-						<li><a href="#">Meine Routen</a></li>
-						<li><a href="#">Statistiken</a></li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<div class="input-group">
-  							<span class="input-group-addon" id="basic-addon1">From</span>
-  							<input type="text" class="form-control" placeholder="Salzburg" aria-describedby="basic-addon1">
-						</div>
-						<div class="input-group">
-  							<span class="input-group-addon" id="basic-addon1">To</span>
-  							<input type="text" class="form-control" placeholder="München" aria-describedby="basic-addon1">
-						</div>
-						  <span class="glyphicon glyphicon-conf" aria-hidden="true"></span> 
 
-					</ul>
-					</div><!--/.nav-collapse -->
+		<header id="header">
+			<nav class="navbar navbar-default navbar-static-top">
+				<div id="logo" class="navbar-brand">
+					<a href="#">Routenplaner</a>
 				</div>
-			</nav>
-		<div class="container"><%= yield %></div>
+
+				<div class="container">
+					<div class="navbar-header">
+						
+	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+	          </button>
+					</div>
+					<div id="navbar" class="navbar-collapse collapse">
+						<ul class="nav navbar-nav main">
+							<li class="active"><a href="#">Routenplaner</a></li>
+							<li><a href="#">Statistiken</a></li>
+							<% if(isLoggedIn() == true) %>
+							<li><a href="#">Meine Routen</a></li>
+							<% else %>
+							<li><a href="#">Login</a></li>
+							<% end %>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<div class="input-group">
+	  							<span class="input-group-addon" id="basic-addon1">From</span>
+	  							<input type="text" class="form-control" placeholder="Salzburg" aria-describedby="basic-addon1">
+							</div>
+							<div class="input-group">
+	  							<span class="input-group-addon" id="basic-addon1">To</span>
+	  							<input type="text" class="form-control" placeholder="München" aria-describedby="basic-addon1">
+							</div>
+							  <span class="glyphicon glyphicon-conf" aria-hidden="true"></span> 
+
+						</ul>
+						</div><!--/.nav-collapse -->
+					</div>
+				</nav>
+		</header>
+		
+		<div class="container-fluid content"><%= yield %></div>
+	
 	</body>
 </html>
