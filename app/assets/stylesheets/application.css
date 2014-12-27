@@ -1,3 +1,5 @@
+
+
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -11,7 +13,19 @@
  * file per style scope.
  *
  *= require_tree .
+ *= require bootstrap.min
  *= require_self
  */
-@import "bootstrap-sprockets"
-@import "bootstrap"
+
+
+.navbar{
+	padding-top: 100px;
+	background-color: #eb4726;
+	color: red;
+}
+
+.navbar-default
+{
+	background-color: #eb4726;
+	color: red;
+}
