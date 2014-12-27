@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/new'
+
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -55,4 +57,10 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  resources :users, only: [:create,:new,:index]
+  get 'login', to: 'users#login'
+  post 'login', to: 'users#authenticate'
+  get 'logout', to: 'users#logout'
+
 end

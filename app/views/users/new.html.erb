@@ -1,0 +1,43 @@
+<div id="content">
+
+<h1>Neuen Benutzeraccount anlegen</h1>
+
+Schön, dass du einen neuen Benutzeraccount anlegen möchtest!
+
+  <% if @user.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <ul>
+      <% for error in @user.errors.full_messages %>
+        <li><%= error %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_for(:user, :url => {:controller => 'users', :action => 'create'}) do |f| %>
+    
+    <%= f.label :username, "Benutzername" %> 
+    <%= f.text_field :username%>
+
+    <br>
+    
+    <%= f.label :email, "E-Mail" %>
+    <%= f.text_field :email%>
+
+    <br>
+
+    <%= f.label :password, "Passwort" %>
+    <%= f.password_field :password%>
+
+    <br>
+    
+    <%= f.label :password_confirmation, "Passwort bestätigen" %>
+    <%= f.password_field :password_confirmation%>
+
+    <br>
+    
+    <%= f.submit "Jetzt kostenlos anmelden" %>
+  
+  <% end %>
+
+</div>

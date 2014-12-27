@@ -89,6 +89,12 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
   width:100%;
 }
 
+#content {
+  width:80%;
+  margin:0 auto;
+  padding-top:25px;
+}
+
 .clear {
   clear:both;
 }

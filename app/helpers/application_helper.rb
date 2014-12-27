@@ -1,7 +1,11 @@
 module ApplicationHelper
 
   def isLoggedIn()
-    return false
+    if session[:userID]
+      return true
+    else
+      return false
+    end
   end
 
 end

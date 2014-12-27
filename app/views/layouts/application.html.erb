@@ -26,12 +26,13 @@
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav main">
-							<li class="active"><a href="#">Routenplaner</a></li>
+							<li><%= link_to "Routenplaner", root_path %></li>
 							<li><a href="#">Statistiken</a></li>
 							<% if(isLoggedIn() == true) %>
 							<li><a href="#">Meine Routen</a></li>
+							<li><%= link_to "Logout", controller: "users", action: "logout" %></li>
 							<% else %>
-							<li><a href="#">Login</a></li>
+							<li><%= link_to "Login", controller: "users", action: "login" %></li>
 							<% end %>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
@@ -51,7 +52,28 @@
 				</nav>
 		</header>
 		
-		<div class="container-fluid content"><%= yield %></div>
+		<div class="container-fluid content">
+			
+			<% if flash[:error] %>
+				<div class="alert alert-danger">
+					<%= flash[:error] %>
+				</div>
+			<% end %>
+
+			<% if flash[:notice] %>
+				<div class="alert alert-info">
+					<%= flash[:notice] %>
+				</div>
+			<% end %>
+
+			<% if flash[:success] %>
+				<div class="alert alert-success">
+					<%= flash[:success] %>
+				</div>
+			<% end %>
+
+			<%= yield %>
+		</div>
 	
 	</body>
 </html>
