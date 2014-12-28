@@ -26,6 +26,16 @@
   color:#fff;
 }
 
+#topBar {
+  height:5px;
+  width:100%;
+  background:#ed4514;
+  position:absolute;
+  left:0;
+  top:0;
+  z-index:999;
+}
+
 .navbar{
 	padding:0px;
 }
@@ -55,6 +65,21 @@
 
 #header .container {
   height:125px;
+}
+
+#toggleNav {
+  position:absolute;
+  right:5px;
+  top:85px;
+  color:#fff;
+  z-index:9999;
+  background-color: #ed4514;
+  border-radius:20px;
+  padding:5px 10px;
+}
+
+#toggleNav.active {
+  top:-10px;
 }
 
 div#navbar ul.main li {

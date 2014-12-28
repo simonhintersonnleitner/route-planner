@@ -12,6 +12,16 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require turbolinks
 //= require bootstrap.min
 //= require_tree .
+
+$(document).ready(function() {
+
+  $("#toggleNav").on('click',function(){
+    $('nav').slideToggle();
+    $(this).toggleClass('active',500);
+  });
+
+});
