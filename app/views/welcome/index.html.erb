@@ -1,18 +1,64 @@
 <div class="row">
 
-  <div id="sidebar" class="col-xs-12 col-md-3"> 
+  <div id="main" class="col-xs-12 col-md-9">
 
-  asd
+    <div id="map"></div>
 
   </div>
 
-  <div id="main" class="col-xs-12 col-md-9">
+  <div id="sidebar" class="col-xs-12 col-md-3"> 
 
-  <h1>Welcome#index</h1>
-  <p>Find me in app/views/welcome/index.html.erb</p>
+  asd<br>
+  asd<br>
+  asd<br>
+  asd<br>
+  asd<br>
+  asd<br>
+  asd<br>
+  asd<br>
+  asd<br>
+  asd<br>
+  asd<br>
+  asd<br>
+  asd<br>
 
   </div>
 
   <div class="clear"></div>
 
 </div>
+
+<script>  
+  var lat = 47.723818;
+  var lng = 13.0869397;
+
+  initialize(lat,lng); 
+
+  function initialize(lat,lng) {
+  geocoder = new google.maps.Geocoder();
+
+  var latLng  = new google.maps.LatLng(lat,lng);
+
+  var mapOptions = {
+    zoom: 10,
+    center: latLng
+  };
+  map = new google.maps.Map(document.getElementById('map'),
+      mapOptions);
+
+    var circleOptions = {
+      strokeColor: '#888888',
+      strokeOpacity: 0,
+      strokeWeight: 2,
+      fillColor: '#888888',
+      fillOpacity: 0,
+      map: map,
+      center: latLng,
+      radius: 0
+    }
+
+    cityCircle = new google.maps.Circle(circleOptions); 
+
+}
+
+</script>

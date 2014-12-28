@@ -15,6 +15,11 @@
  *= require_self
  */
 
+ body 
+ {
+  background:#fcfcfc;
+ }
+
 #logo {
   float:left;
   padding:35px 0px 0px 30px;
@@ -76,11 +81,18 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
 }
 
 #sidebar {
-  background:red;
+  height:100%;
+  position:absolute;
+  box-shadow:0px 0px 4px #444444;
 }
 
 #main {
-  background:green;
+  background:#fcfcfc;
+  height:100%;
+  position:absolute;
+  right:0;
+  top:100;
+  padding:0;
 }
 
 .container.content {
@@ -93,6 +105,12 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
   width:80%;
   margin:0 auto;
   padding-top:25px;
+  background:#fcfcfc;
+}
+
+#map {
+  height:100%;
+  width:100%;
 }
 
 .clear {
