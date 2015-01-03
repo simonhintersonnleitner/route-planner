@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  region: MyString
+  state: MyString
+  name: MyString
+  latNorthEast: 1.5
+  lngNorthEast: 1.5
+  latSouthWest: 1.5
+  lngSouthWest: 1.5
+
+two:
+  region: MyString
+  state: MyString
+  name: MyString
+  latNorthEast: 1.5
+  lngNorthEast: 1.5
+  latSouthWest: 1.5
+  lngSouthWest: 1.5
