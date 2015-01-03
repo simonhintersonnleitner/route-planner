@@ -5,12 +5,8 @@ class Route < ActiveRecord::Base
   @@url = 'http://maps.googleapis.com/maps/api/directions/json'
 
   after_initialize do |route|
-    # count up hits by 1
-    if route.hits == nil  
-      route.hits = 1
-    else 
-      route.hits += 1
-    end
+
+    route.count_up
 
     route.get_data if path == nil
   end
@@ -59,6 +55,18 @@ class Route < ActiveRecord::Base
 
   def get_status(json)
     json["status"]
+  end
+
+  def count_up
+    # count up hits by 1
+    if self.hits == nil  
+      self.hits = 1
+    else 
+      self.hits += 1
+    end
+
+    self.save
+
   end
 
 end
