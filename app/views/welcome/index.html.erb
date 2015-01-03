@@ -34,31 +34,38 @@
 
   initialize(lat,lng); 
 
-  function initialize(lat,lng) {
-  geocoder = new google.maps.Geocoder();
+  function initialize(lat,lng) 
+  {
+    geocoder = new google.maps.Geocoder();
 
-  var latLng  = new google.maps.LatLng(lat,lng);
+    var latLng  = new google.maps.LatLng(lat,lng);
 
-  var mapOptions = {
-    zoom: 10,
-    center: latLng
-  };
-  map = new google.maps.Map(document.getElementById('map'),
-      mapOptions);
+    var mapOptions = {
+      zoom: 10,
+      center: latLng
+    };
+    map = new google.maps.Map(document.getElementById('map'),
+        mapOptions);
 
-    var circleOptions = {
-      strokeColor: '#888888',
-      strokeOpacity: 0,
-      strokeWeight: 2,
-      fillColor: '#888888',
-      fillOpacity: 0,
-      map: map,
-      center: latLng,
-      radius: 0
+      var circleOptions = {
+        strokeColor: '#888888',
+        strokeOpacity: 0,
+        strokeWeight: 2,
+        fillColor: '#888888',
+        fillOpacity: 0,
+        map: map,
+        center: latLng,
+        radius: 0
+      }
+
+      cityCircle = new google.maps.Circle(circleOptions); 
+
+  }
+
+  $("#origin,#destination").keyup(function(event){
+    if(event.keyCode == 13){
+        get_route();
     }
-
-    cityCircle = new google.maps.Circle(circleOptions); 
-
-}
+  });
 
 </script>
