@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150103093224) do
+ActiveRecord::Schema.define(version: 20150103161012) do
+
+  create_table "price_data", force: true do |t|
+    t.integer  "cityFk"
+    t.float    "minDiesel",      limit: 24
+    t.float    "minPetrol",      limit: 24
+    t.float    "averageDiesel",  limit: 24
+    t.float    "averagePertrol", limit: 24
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "reference_cities", force: true do |t|
     t.string   "region"
