@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150102165809) do
+ActiveRecord::Schema.define(version: 20150103160544) do
 
   create_table "routes", force: true do |t|
     t.string   "origin"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20150102165809) do
     t.integer  "hits"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "time",        limit: 24
   end
 
   create_table "users", force: true do |t|
