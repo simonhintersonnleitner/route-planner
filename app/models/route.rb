@@ -8,7 +8,7 @@ class Route < ActiveRecord::Base
 
     route.count_up
 
-    route.get_data if path == nil
+    route.get_data if path == nil || bounds == nil
   end
 
   def get_data
@@ -37,12 +37,17 @@ class Route < ActiveRecord::Base
       set_distance(json["routes"][0]["legs"][0]["distance"]["value"])
       set_time(json["routes"][0]["legs"][0]["duration"]["value"])
       set_path(json["routes"][0]["overview_polyline"]["points"])
+      set_bounds(json["routes"][0]["bounds"])
     end
   
   end
 
   def set_distance(distance)
     self.distance = distance
+  end
+
+  def set_bounds(bounds)
+    self.bounds = bounds  
   end
 
   def set_time(time)
