@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cityFk: 1
+  minDiesel: 1.5
+  minPetrol: 1.5
+  averageDiesel: 1.5
+  averagePertrol: 1.5
+
+two:
+  cityFk: 1
+  minDiesel: 1.5
+  minPetrol: 1.5
+  averageDiesel: 1.5
+  averagePertrol: 1.5

@@ -13,6 +13,28 @@
 
 ActiveRecord::Schema.define(version: 20150103160544) do
 
+  create_table "price_data", force: true do |t|
+    t.integer  "cityFk"
+    t.float    "minDiesel",      limit: 24
+    t.float    "minPetrol",      limit: 24
+    t.float    "averageDiesel",  limit: 24
+    t.float    "averagePertrol", limit: 24
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reference_cities", force: true do |t|
+    t.string   "region"
+    t.string   "state"
+    t.string   "name"
+    t.float    "latNorthEast", limit: 24
+    t.float    "lngNorthEast", limit: 24
+    t.float    "latSouthWest", limit: 24
+    t.float    "lngSouthWest", limit: 24
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "routes", force: true do |t|
     t.string   "origin"
     t.string   "destination"
