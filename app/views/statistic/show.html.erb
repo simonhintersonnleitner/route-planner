@@ -1,14 +1,12 @@
 <div class="row">
 
   <div id="main" class="col-xs-12 col-md-9">
-
-    <div id="map"></div>
-
+     <%= @allCitiesPrices %>
   </div>
 
   <div id="sidebar" class="col-xs-12 col-md-3"> 
 
- Bregenz <%= @Bregenz %><br>
+ <!--Bregenz <%= @Bregenz %><br>
  Innsbruck <%= @Innsbruck %><br>
  Salzburg <%= @Salzburg %><br>
  Klagenfurt <%= @Klagenfurt %><br>
@@ -16,8 +14,7 @@
  St.Pölten <%= @StPoelten %><br>
  Graz <%= @Graz %><br>
  Eisenstadt <%= @Eisenstadt %><br>
- Wien <%= @Wien %><br>
- <%= @allCitiesPrices %>
+ Wien <%= @Wien %><br>-->
 
 
   </div>
@@ -26,37 +23,4 @@
 
 </div>
 
-<script>  
-  var lat = 47.723818;
-  var lng = 13.0869397;
 
-  initialize(lat,lng); 
-
-  function initialize(lat,lng) {
-  geocoder = new google.maps.Geocoder();
-
-  var latLng  = new google.maps.LatLng(lat,lng);
-
-  var mapOptions = {
-    zoom: 10,
-    center: latLng
-  };
-  map = new google.maps.Map(document.getElementById('map'),
-      mapOptions);
-
-    var circleOptions = {
-      strokeColor: '#888888',
-      strokeOpacity: 0,
-      strokeWeight: 2,
-      fillColor: '#888888',
-      fillOpacity: 0,
-      map: map,
-      center: latLng,
-      radius: 0
-    }
-
-    cityCircle = new google.maps.Circle(circleOptions); 
-
-}
-
-</script>

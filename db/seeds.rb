@@ -11,7 +11,9 @@
 
 #adding reference Cities to db
 
-referenceCities = ["Bregenz","Innsbruck","Salzburg","Klagenfurt","Graz","Linz","Wien","Eisenstadt"] 
+referenceCities = ["Bregenz",
+	"Innsbruck","Salzburg","Klagenfurt","Graz",
+	"Linz","Wien","Eisenstadt","Zirl","Zell am See"] 
 
 for i in referenceCities
 
