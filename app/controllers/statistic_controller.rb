@@ -1,6 +1,12 @@
 class StatisticController < ApplicationController
   	def show
   		
+	 	
+
+	end
+
+  	def save
+  		
 	 	@allCities = ReferenceCities.all()
 	 	@allCitiesPrices = " "
 	    for city in @allCities

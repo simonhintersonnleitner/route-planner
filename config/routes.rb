@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   # Example of regular route:
   get 'statistic' => 'statistic#show'
 
+
   get 'route/:origin/:destination' => 'routes#get_json'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

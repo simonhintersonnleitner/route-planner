@@ -1,8 +1,36 @@
 <div class="row">
 
   <div id="main" class="col-xs-12 col-md-9">
-     <%= @allCitiesPrices %>
+    <h3>Aktuelle Preisübersicht</h3>
+    <table class="table table-striped table-hover">
+      <tr>
+        <td>Ort/Stadt</td>
+        <td>Günstigster Preis (Diesel)</td>
+        <td>Durschnittspreis (Diesel) <b>*</b></td>
+        <td>Günstigster Preis (Super)</td>
+        <td>Durschnittspreis (Super) <b>*</b></td>
+      </tr>
+    <% for city in  ReferenceCities.all() 
+       prices = PriceData.where(cityFk: city.id).take
+    %>
+
+     <tr>
+        <td><%= city.name %></td>
+        <td><%= prices.minDiesel.to_s %></td>
+        <td><%= prices.averageDiesel.to_s %></td>
+        <td><%= prices.minPetrol.to_s %></td>
+        <td><%= prices.averagePertrol.to_s %></td>
+      </tr>
+
+      <% end %>
+      </table>
+      <p><b>*</b> - Durchschnitt von den 5 günstigsten Tankstellen des jeweiligen Ortes/ der jeweiligen Stadt<p>
+        <h3>Preisverlauf</h3>
+
+
+        
   </div>
+
 
   <div id="sidebar" class="col-xs-12 col-md-3"> 
 
