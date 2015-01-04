@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   # Example of regular route:
   get 'statistic' => 'statistic#show'
+  get 'statistic/:cityId' => 'statistic#getCityData'
+
 
 
   get 'route/:origin/:destination' => 'routes#get_json'

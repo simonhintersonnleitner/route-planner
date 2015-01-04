@@ -47,8 +47,8 @@ $('#city').change(update);
 
 
 
-var ctx = $("#myChart").get(0).getContext("2d");
 // This will get the first returned node in the jQuery collection.
+
 var data = {
     labels: [],
     datasets: [
@@ -76,19 +76,53 @@ var data = {
 };
 
 
-function update(e) {
-  console.log($('#city').val())
-
-}
-
-<% prices = PriceData.where(cityFk: "4") %>
+/*<% prices = PriceData.where(cityFk: "4") %>
 <% for price in prices %>
   data.labels.push('<%= price.updated_at.to_s %>');
   data.datasets[0].data.push(<%= price.averageDiesel %>);
   data.datasets[1].data.push(<%= price.averagePertrol %>);
-<% end %>
+<% end %>*/
+var ctx = $("#myChart").get(0).getContext("2d");
+var myLineChart = new Chart(ctx);
 
-  var myLineChart = new Chart(ctx).Line(data);
+myLineChart.Line(data);
+
+//A little later on with new data
+function update(e) {
+  console.log($('#city').val())
+  $.ajax({
+  url: "statistic/" + $('#city').val(),
+  }).done(function(json) 
+  {
+    console.log(myLineChart);
+    //reset dataarrays
+    data.labels = [];
+    data.datasets[0].data = [];
+    data.datasets[1].data = [];
+
+    for (var i = 0; i < json.length; i++) 
+    {
+      //console.log(data.datasets[0]);
+      data.labels.push(json[i].updated_at)
+      data.datasets[0].data.push(json[i].averageDiesel);
+      data.datasets[1].data.push(json[i].averagePertrol);
+    };
+
+
+    myLineChart.Line(data);
+    ctx.clearRect( 0 , 0 , 1000, 500 );
+    console.log(ctx);
+
+
+
+    
+
+  });
+
+
+}
+
+
 
 
 </script>

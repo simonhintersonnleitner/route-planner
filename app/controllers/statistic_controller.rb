@@ -69,4 +69,8 @@ class StatisticController < ApplicationController
 		priceDataset.save!
 
 	end
+	def getCityData
+		 @prices = PriceData.where(cityFk: params[:cityId])
+       	 render :json => @prices.to_json
+	end
 end
