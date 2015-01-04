@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require bootstrap.min
 //= require_tree .
+//= require chart.min
 
   var polylines = [];
 
