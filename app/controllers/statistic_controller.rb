@@ -1,5 +1,5 @@
 class StatisticController < ApplicationController
-  	def show
+  	def actual
   		
 	 	#save
 	 	#city = ReferenceCities.find(:name "Neunkirchen").take
@@ -8,6 +8,9 @@ class StatisticController < ApplicationController
 	 	#getCheaptestPriceOfCity(city)
 	end
 
+	def history
+		#save
+	end
   	def save
   		
 	 	@allCities = ReferenceCities.all()
