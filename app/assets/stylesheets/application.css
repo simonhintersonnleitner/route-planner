@@ -115,15 +115,21 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
   background:#fcfcfc;
   height:100%;
   position:absolute;
+  overflow: scroll;
   right:0;
+  padding: 0;
   top:100;
-  padding:0;
-}
-#stats
-{
-  padding: 20px;
 }
 
+#mainStats {
+  background:#fcfcfc;
+  height:100%;
+  position:absolute;
+  overflow: scroll;
+  right:0;
+  padding: 10;
+  top:100;
+}
 .container.content {
   margin:0;
   padding:0;

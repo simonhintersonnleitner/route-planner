@@ -1,8 +1,11 @@
 class StatisticController < ApplicationController
   	def show
   		
-	 	
+	 	#save
+	 	#city = ReferenceCities.find(:name "Neunkirchen").take
+	 	#render :text => city
 
+	 	#getCheaptestPriceOfCity(city)
 	end
 
   	def save
@@ -30,33 +33,33 @@ class StatisticController < ApplicationController
 		dieselPrice = Net::HTTP.post_form(uri, "data" => "['','DIE','#{lngNorthEast}','#{latNorthEast}','#{lngSouthWest}','#{latSouthWest}']")
 		petrolPrice = Net::HTTP.post_form(uri, "data" => "['','SUP','#{lngNorthEast}','#{latNorthEast}','#{lngSouthWest}','#{latSouthWest}']")
 
+		if(dieselPrice.kind_of?(Net::HTTPSuccess))
 
-		decode1 = ActiveSupport::JSON.decode(dieselPrice.body)
-		decode2 = ActiveSupport::JSON.decode(petrolPrice.body)
+			decode1 = ActiveSupport::JSON.decode(dieselPrice.body)
+			decode2 = ActiveSupport::JSON.decode(petrolPrice.body)
 
-		sum1 = 0
-		sum2 = 0
+			sum1 = 0
+			sum2 = 0
 
-		
-		for i in 0..4
-			sum1 += decode1[i]["spritPrice"][0]["amount"].to_f
-			sum2 += decode2[i]["spritPrice"][0]["amount"].to_f
+			for i in 0..4
+				sum1 += decode1[i]["spritPrice"][0]["amount"].to_f
+				sum2 += decode2[i]["spritPrice"][0]["amount"].to_f
+			end
+
+			sum1 /= 5
+			sum2 /= 5
+
+			averageDiesel = sum1.round(3)
+			averagePertrol = sum2.round(3)
+
+			minDiesel = decode1[0]["spritPrice"][0]["amount"].to_f
+			minPetrol = decode2[0]["spritPrice"][0]["amount"].to_f
+
+			insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
+
+			return averageDiesel.to_s;
+			#render :text => result
 		end
-
-		sum1 /= 5
-		sum2 /= 5
-
-		averageDiesel = sum1.round(3)
-		averagePertrol = sum2.round(3)
-
-		minDiesel = decode1[0]["spritPrice"][0]["amount"].to_f
-		minPetrol = decode2[0]["spritPrice"][0]["amount"].to_f
-
-		insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
-
-		return averageDiesel.to_s;
-		#render :text => result
-
 		#render :text => res.body
 	end
 	def insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
