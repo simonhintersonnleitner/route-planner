@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'statistic/actual' => 'statistic#actual'
   get 'statistic/history' => 'statistic#history'
   get 'statistic/weekday' => 'statistic#weekday'
+  get 'statistic/minMax' => 'statistic#minMax'
 
 
   get 'statistic/getCityDataById/:cityId' => 'statistic#getCityDataById'

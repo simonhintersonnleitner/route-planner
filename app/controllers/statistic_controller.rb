@@ -15,6 +15,11 @@ class StatisticController < ApplicationController
 		#save
 	end
 
+	def minMax
+
+		
+	end
+
 	def save
 		for city in ReferenceCities.all()
     	getCheaptestPriceOfCity(city)
@@ -88,7 +93,7 @@ class StatisticController < ApplicationController
 	end
 
 	def getCityDataByIdSortedByWeekday
-		
+
 		#calculate average for each weekdays
 		prices = PriceData.where(cityFk: params[:cityId])
 		sumDiesel = Array.new(14, 0)
