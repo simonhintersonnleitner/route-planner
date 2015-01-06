@@ -2,17 +2,15 @@ class StatisticController < ApplicationController
 	require 'net/http'
 
 	def actual
-		#save
-		#city = ReferenceCities.where(name: "Neunkirchen").take
-		#getCheaptestPriceOfCity(city)
+	
 	end
 
 	def history
-		#save
+		
 	end
 
 	def weekday
-		#save
+		
 	end
 
 	def minMax
@@ -27,7 +25,6 @@ class StatisticController < ApplicationController
 
 	def savePriceOfCity(city)
 	
-		#render :text => decode1
 		#render :text => decode1[0]["errorItems"][0]["msgText"]
 
 		responseDiesel = getResponseFromApi(city,"DIE")
@@ -35,7 +32,6 @@ class StatisticController < ApplicationController
 
 		insert(city,getMinOfResponse(responseDiesel),getMinOfResponse(responsePetrol),getAverageOfResponse(responseDiesel),getAverageOfResponse(responsePetrol))
 
-		#render :text => result
 		#render :text => res.body
 
 	end
