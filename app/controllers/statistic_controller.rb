@@ -20,13 +20,13 @@ class StatisticController < ApplicationController
 		
 	end
 
-	def save
+	def savePriceforAllCities
 		for city in ReferenceCities.all()
     	getCheaptestPriceOfCity(city)
 		end
 	end
 
-	def getCheaptestPriceOfCity(city)
+	def savePriceOfCity(city)
 
 		uri = URI('http://www.spritpreisrechner.at/espritmap-app/GasStationServlet')
 
@@ -69,8 +69,9 @@ class StatisticController < ApplicationController
 		insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
 
 		#render :text => result
-		end
 		#render :text => res.body
+
+		end
 	end
 
 	def insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
@@ -95,7 +96,12 @@ class StatisticController < ApplicationController
 	def getCityDataByIdSortedByWeekday
 
 		#calculate average for each weekdays
-		prices = PriceData.where(cityFk: params[:cityId])
+		if(params[:cityId] == "all")
+			prices = PriceData.all()
+		else
+			prices = PriceData.where(cityFk: params[:cityId])
+		end	
+		
 		sumDiesel = Array.new(14, 0)
 		sumPetrol = Array.new(14, 0)
 		

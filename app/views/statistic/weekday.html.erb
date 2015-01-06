@@ -3,6 +3,7 @@
     <h3>Wochentagauswertung</h3>
 
     <select id="city" size="1">
+      <option value='all'>Alle Orte/Städte</option>
       <% for city in  ReferenceCities.all() %>
       <option value=<%= city.id %>><%= city.name %></option>
       <% end %>
