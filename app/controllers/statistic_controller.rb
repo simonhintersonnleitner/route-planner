@@ -1,36 +1,33 @@
 class StatisticController < ApplicationController
-  	def actual
-  		
-	 	#save
-	 	#city = ReferenceCities.where(name: "Neunkirchen").take
-
-	 	#getCheaptestPriceOfCity(city)
+	def actual
+		#save
+		#city = ReferenceCities.where(name: "Neunkirchen").take
+		#getCheaptestPriceOfCity(city)
 	end
 
 	def history
 		#save
 	end
-  	def save
-  		
-	 	@allCities = ReferenceCities.all()
-	 	@allCitiesPrices = " "
-	    for city in @allCities
-	        @allCitiesPrices += " " + city.name + " " + getCheaptestPriceOfCity(city).to_s + ""
-	    end
 
+	def save
+		@allCities = ReferenceCities.all()
+		@allCitiesPrices = " "
+		for city in @allCities
+			@allCitiesPrices += " " + city.name + " " + getCheaptestPriceOfCity(city).to_s + ""
+		end
 	end
+
 	def getCheaptestPriceOfCity(city)
 
-  		require 'net/http'
+		require 'net/http'
 
-	  	uri = URI('http://www.spritpreisrechner.at/espritmap-app/GasStationServlet')
+		uri = URI('http://www.spritpreisrechner.at/espritmap-app/GasStationServlet')
 
-	  	lngNorthEast = city.lngNorthEast
-	  	latNorthEast = city.latNorthEast
+		lngNorthEast = city.lngNorthEast
+		latNorthEast = city.latNorthEast
 
-	  	lngSouthWest = city.lngSouthWest
-	  	latSouthWest = city.latSouthWest
-
+		lngSouthWest = city.lngSouthWest
+		latSouthWest = city.latSouthWest
 
 		dieselPrice = Net::HTTP.post_form(uri, "data" => "['','DIE','#{lngNorthEast}','#{latNorthEast}','#{lngSouthWest}','#{latSouthWest}']")
 		petrolPrice = Net::HTTP.post_form(uri, "data" => "['','SUP','#{lngNorthEast}','#{latNorthEast}','#{lngSouthWest}','#{latSouthWest}']")
@@ -45,30 +42,31 @@ class StatisticController < ApplicationController
 
 		if(dieselPrice.kind_of?(Net::HTTPSuccess) && petrolPrice.kind_of?(Net::HTTPSuccess))
 
-			sum1 = 0
-			sum2 = 0
+		sum1 = 0
+		sum2 = 0
 
-			for i in 0..4
-				sum1 += decode1[i]["spritPrice"][0]["amount"].to_f
-				sum2 += decode2[i]["spritPrice"][0]["amount"].to_f
-			end
+		for i in 0..4
+			sum1 += decode1[i]["spritPrice"][0]["amount"].to_f
+			sum2 += decode2[i]["spritPrice"][0]["amount"].to_f
+		end
 
-			sum1 /= 5
-			sum2 /= 5
+		sum1 /= 5
+		sum2 /= 5
 
-			averageDiesel = sum1.round(3)
-			averagePertrol = sum2.round(3)
+		averageDiesel = sum1.round(3)
+		averagePertrol = sum2.round(3)
 
-			minDiesel = decode1[0]["spritPrice"][0]["amount"].to_f
-			minPetrol = decode2[0]["spritPrice"][0]["amount"].to_f
+		minDiesel = decode1[0]["spritPrice"][0]["amount"].to_f
+		minPetrol = decode2[0]["spritPrice"][0]["amount"].to_f
 
-			insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
+		insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
 
-			return averageDiesel.to_s;
-			#render :text => result
+		return averageDiesel.to_s;
+		#render :text => result
 		end
 		#render :text => res.body
 	end
+
 	def insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
 		priceDataset = PriceData.new
 		priceDataset.cityFk = city.id
@@ -77,12 +75,13 @@ class StatisticController < ApplicationController
 		priceDataset.averageDiesel = averageDiesel
 		priceDataset.averagePertrol = averagePertrol
 		priceDataset.save!
-
 	end
+
 	def getCityData
 		@prices = PriceData.where(cityFk: params[:cityId])
-       	render :json => @prices.to_json
+		render :json => @prices.to_json
 	end
+
 	def clean
 		cities = ReferenceCities.all()
 		for city in cities
@@ -94,6 +93,6 @@ class StatisticController < ApplicationController
 				#priceBefore = price;
 			end	
 		end
-
 	end
+	
 end
