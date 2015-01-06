@@ -9,14 +9,6 @@ class StatisticController < ApplicationController
 		#save
 	end
 
-	def save
-		@allCities = ReferenceCities.all()
-		@allCitiesPrices = " "
-		for city in @allCities
-			@allCitiesPrices += " " + city.name + " " + getCheaptestPriceOfCity(city).to_s + ""
-		end
-	end
-
 	def getCheaptestPriceOfCity(city)
 
 		require 'net/http'
@@ -94,5 +86,5 @@ class StatisticController < ApplicationController
 			end	
 		end
 	end
-	
+
 end
