@@ -7,8 +7,9 @@
       <option value=<%= city.id %>><%= city.name %></option>
       <% end %>
     </select>
-
-    <canvas id="myChart" width="1000" height="500"></canvas>
+    <div id="chartWrapper">
+      <canvas id="myChart" width="1000" height="500"></canvas>
+    </div>
   </div>
   
   <div id="sidebar" class="col-xs-12 col-md-3">
@@ -21,16 +22,16 @@
 
 $('#city').change(update);
 
-update();
+
 
 var data = {
     labels: [],
     datasets: [
         {
             label: "min Diesel",
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
+            fillColor: "rgba(220,220,220,0)",
+            strokeColor: "rgba(191,27,0,1)",
+            pointColor: "rgba(191,27,0,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(220,220,220,1)",
@@ -38,9 +39,9 @@ var data = {
         },
         {
             label: "average Diesel",
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
+            fillColor: "rgba(220,220,220,0)",
+            strokeColor: "rgba(64,9,0,1)",
+            pointColor: "rgba(64,9,0,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(220,220,220,1)",
@@ -48,9 +49,9 @@ var data = {
         },
         {
             label: "min Super",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
+            fillColor: "rgba(151,187,205,0)",
+            strokeColor: "rgba(232,63,12,1)",
+            pointColor: "rgba(232,63,12,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(151,187,205,1)",
@@ -58,9 +59,9 @@ var data = {
         },
         {
             label: "average Super",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
+            fillColor: "rgba(151,187,205,0)",
+            strokeColor: "rgba(255,13,14,1)",
+            pointColor: "rgba(255,13,14,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(151,187,205,1)",
@@ -69,25 +70,30 @@ var data = {
     ]
 };
 
-var ctx = $("#myChart").get(0).getContext("2d");
-var myLineChart = new Chart(ctx);
 
-myLineChart.Line(data);
+update();
 
 //A little later on with new data
 function update(e) {
-  console.log($('#city').val())
+
   $.ajax({
   url: "" + $('#city').val(),
   }).done(function(json) 
   {
-    console.log(myLineChart);
+    
     //reset dataarrays
     data.labels = [];
     for (var i = 0; i < 4; i++) 
       data.datasets[i].data = [];
-   
 
+    //reset canvas with recreating
+    $("#myChart").remove();
+    $("#chartWrapper").append("<canvas id='myChart' width='1000' height='500'></canvas>");
+
+    var ctx = $("#myChart").get(0).getContext("2d");
+    var myLineChart = new Chart(ctx); 
+
+   
     for (var i = 0; i < json.length; i++) 
     {
       //console.log(data.datasets[0]);
@@ -96,26 +102,13 @@ function update(e) {
       data.datasets[1].data.push(json[i].minPetrol);
       data.datasets[2].data.push(json[i].averageDiesel);
       data.datasets[3].data.push(json[i].averagePertrol);
-
     };
-
-
-    myLineChart.Line(data);
-    ctx.clearRect( 0 , 0 , 1000, 500);
-  
-
-
-
-    
+      myLineChart.Line(data);
 
   });
 
 
 }
-
-
-
-
 </script>
 
 
