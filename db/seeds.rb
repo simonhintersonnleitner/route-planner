@@ -57,7 +57,6 @@ referenceCities = [
 	"Bruck an der Mur",	
 	"St. Veit an der Glan",	
 	"Korneuburg",	
-	"Neunkirchen",	
 	"Vöcklabruck",	
 	"Lienz",	
 	"Rankweil",	
@@ -84,7 +83,7 @@ referenceCities = [
 
 for i in referenceCities
 
-	uri2 = 'http://maps.googleapis.com/maps/api/geocode/json?address=' + i
+	uri2 = 'http://maps.googleapis.com/maps/api/geocode/json?language=de&address=' + i
 
 	sleep(1)
 	result = Net::HTTP.get(URI.parse(URI.encode(uri2)))

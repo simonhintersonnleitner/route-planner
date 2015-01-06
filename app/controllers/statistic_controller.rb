@@ -80,7 +80,20 @@ class StatisticController < ApplicationController
 
 	end
 	def getCityData
-		 @prices = PriceData.where(cityFk: params[:cityId])
-       	 render :json => @prices.to_json
+		@prices = PriceData.where(cityFk: params[:cityId])
+       	render :json => @prices.to_json
+	end
+	def clean
+		cities = ReferenceCities.all()
+		for city in cities
+			priceBefore
+			prices = PriceData.where(cityFk: city.id)
+			for price in prices
+				#if(price.minDiesel == priceBefore.minDiesel)
+				#d = DateTime.parse(price.updated_at)
+				#priceBefore = price;
+			end	
+		end
+
 	end
 end
