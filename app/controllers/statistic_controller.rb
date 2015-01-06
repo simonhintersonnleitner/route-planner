@@ -1,4 +1,6 @@
 class StatisticController < ApplicationController
+	require 'net/http'
+
 	def actual
 		#save
 		#city = ReferenceCities.where(name: "Neunkirchen").take
@@ -9,9 +11,17 @@ class StatisticController < ApplicationController
 		#save
 	end
 
-	def getCheaptestPriceOfCity(city)
+	def weekday
+		#save
+	end
 
-		require 'net/http'
+	def save
+		for city in ReferenceCities.all()
+    	getCheaptestPriceOfCity(city)
+		end
+	end
+
+	def getCheaptestPriceOfCity(city)
 
 		uri = URI('http://www.spritpreisrechner.at/espritmap-app/GasStationServlet')
 
@@ -53,7 +63,6 @@ class StatisticController < ApplicationController
 
 		insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
 
-		return averageDiesel.to_s;
 		#render :text => result
 		end
 		#render :text => res.body
@@ -69,9 +78,49 @@ class StatisticController < ApplicationController
 		priceDataset.save!
 	end
 
-	def getCityData
-		@prices = PriceData.where(cityFk: params[:cityId])
-		render :json => @prices.to_json
+	def getCityDataById
+		if(params[:cityId] == "all")
+			prices = PriceData.all()
+		else
+			prices = PriceData.where(cityFk: params[:cityId])
+		end	
+		render :json => prices.to_json
+	end
+
+	def getCityDataByIdSortedByWeekday
+		
+		#calculate average for each weekdays
+		prices = PriceData.where(cityFk: params[:cityId])
+		sumDiesel = Array.new(14, 0)
+		sumPetrol = Array.new(14, 0)
+		
+		for price in prices
+			d = DateTime.parse(price.updated_at.to_s)
+			sumDiesel[d.wday] += price.averageDiesel
+			sumDiesel[d.wday+7] += 1
+			sumPetrol[d.wday] += price.averagePertrol
+			sumPetrol[d.wday+7] += 1
+		end
+
+		#create json response object
+		pricePerWeekday = Array.new(7,0)
+
+		for i in 0..6
+				if sumDiesel[i+7] != 0
+					pricePerWeekday[i] = {
+    			:weekday => i,
+    			:averageDiesel => ((sumDiesel[i])/sumDiesel[i+7]).round(3),
+    			:averagePetrol => ((sumPetrol[i])/sumPetrol[i+7]).round(3)}
+				else
+					pricePerWeekday[i] = {
+    			:weekday => i,
+    			:averageDiesel => 0,
+    			:averagePetrol => 0}
+				end
+		end
+		
+  	render :json => pricePerWeekday.to_json  
+
 	end
 
 	def clean

@@ -12,8 +12,12 @@ Rails.application.routes.draw do
   # Example of regular route:
   get 'statistic/actual' => 'statistic#actual'
   get 'statistic/history' => 'statistic#history'
+  get 'statistic/weekday' => 'statistic#weekday'
 
-  get 'statistic/:cityId' => 'statistic#getCityData'
+
+  get 'statistic/getCityDataById/:cityId' => 'statistic#getCityDataById'
+  get 'statistic/getCityDataByIdSortedByWeekday/:cityId' => 'statistic#getCityDataByIdSortedByWeekday'
+
 
 
 

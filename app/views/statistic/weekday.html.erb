@@ -1,6 +1,6 @@
 <div class="row">
   <div id="mainStats" class=" stats col-xs-12 col-md-9 ">
-    <h3>Preisverlauf</h3>
+    <h3>Wochentagauswertung</h3>
 
     <select id="city" size="1">
       <% for city in  ReferenceCities.all() %>
@@ -8,7 +8,7 @@
       <% end %>
     </select>
     <div id="chartWrapper">
-      <canvas id="myChart" width="1000" height="500"></canvas>
+      <canvas id="myChart" width="1000" height="300"></canvas>
     </div>
   </div>
   
@@ -22,14 +22,12 @@
 
 $('#city').change(update);
 
-
-
 var data = {
-    labels: [],
+    labels: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
     datasets: [
         {
             label: "min Diesel",
-            fillColor: "rgba(220,220,220,0)",
+            fillColor: "rgba(191,27,0,1)",
             strokeColor: "rgba(191,27,0,1)",
             pointColor: "rgba(191,27,0,1)",
             pointStrokeColor: "#fff",
@@ -39,34 +37,14 @@ var data = {
         },
         {
             label: "average Diesel",
-            fillColor: "rgba(220,220,220,0)",
+            fillColor: "rgba(64,9,0,1)",
             strokeColor: "rgba(64,9,0,1)",
             pointColor: "rgba(64,9,0,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(220,220,220,1)",
             data: []
-        },
-        {
-            label: "min Super",
-            fillColor: "rgba(151,187,205,0)",
-            strokeColor: "rgba(232,63,12,1)",
-            pointColor: "rgba(232,63,12,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: []
-        },
-        {
-            label: "average Super",
-            fillColor: "rgba(151,187,205,0)",
-            strokeColor: "rgba(255,13,14,1)",
-            pointColor: "rgba(255,13,14,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: []
-        },
+        }
     ]
 };
 
@@ -77,13 +55,12 @@ update();
 function update(e) {
 
   $.ajax({
-  url: "getCityDataById/" + $('#city').val(),
+  url: "getCityDataByIdSortedByWeekday/" + $('#city').val(),
   }).done(function(json) 
   {
     
     //reset dataarrays
-    data.labels = [];
-    for (var i = 0; i < 4; i++) 
+    for (var i = 0; i < 2; i++) 
       data.datasets[i].data = [];
 
     //reset canvas with recreating
@@ -92,20 +69,16 @@ function update(e) {
 
     var ctx = $("#myChart").get(0).getContext("2d");
     var myLineChart = new Chart(ctx); 
-
    
     for (var i = 0; i < json.length; i++) 
     {
-      //console.log(data.datasets[0]);
-      data.labels.push(json[i].updated_at)
-      data.datasets[0].data.push(json[i].minDiesel);
-      data.datasets[1].data.push(json[i].minPetrol);
-      data.datasets[2].data.push(json[i].averageDiesel);
-      data.datasets[3].data.push(json[i].averagePertrol);
+      data.datasets[0].data.push(json[i].averageDiesel);
+      data.datasets[1].data.push(json[i].averagePetrol);
     };
-      myLineChart.Line(data);
 
-  });
+    console.log()
+    myLineChart.Bar(data,{});
+    });
 
 
 }
