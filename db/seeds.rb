@@ -97,6 +97,9 @@ for i in referenceCities
 		latSouthWest = decode["results"][0]["geometry"]["viewport"]["southwest"]["lat"]
 		lngSouthWest = decode["results"][0]["geometry"]["viewport"]["southwest"]["lng"]
 
+		latLocation = decode["results"][0]["geometry"]["location"]["lat"]
+		lngLocation = decode["results"][0]["geometry"]["location"]["lng"]
+
 
 		cities = ReferenceCities.find_or_initialize_by(name: i)
 		cities.name = i
@@ -104,6 +107,8 @@ for i in referenceCities
 		cities.lngNorthEast = lngNorthEast
 		cities.latSouthWest = latSouthWest
 		cities.lngSouthWest = lngSouthWest
+		cities.latLocation = latLocation
+		cities.lngLocation = lngLocation
 		cities.region = decode["results"][0]["address_components"][decode["results"][0]["address_components"].length-3]["short_name"]
 		cities.state = decode["results"][0]["address_components"][decode["results"][0]["address_components"].length-2]["short_name"]
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150103181316) do
+ActiveRecord::Schema.define(version: 20150106230649) do
 
   create_table "price_data", force: true do |t|
     t.integer  "cityFk"
@@ -33,6 +33,8 @@ ActiveRecord::Schema.define(version: 20150103181316) do
     t.float    "lngSouthWest", limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "lngLocation",  limit: 24
+    t.float    "latLocation",  limit: 24
   end
 
   create_table "routes", force: true do |t|

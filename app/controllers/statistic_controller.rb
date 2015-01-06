@@ -13,6 +13,10 @@ class StatisticController < ApplicationController
 		
 	end
 
+	def reference
+
+	end
+
 	def minMax
 				#savePriceforAllCities
 				#render :json => PriceData.get_cheaptest_diesel_price

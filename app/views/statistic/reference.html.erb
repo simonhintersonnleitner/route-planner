@@ -1,0 +1,64 @@
+<div class="row">
+  <div id="mainStats" class=" stats col-xs-12 col-md-9 ">
+    
+
+    <div id="map"></div>
+
+
+
+  </div>
+  <div id="sidebar" class="col-xs-12 col-md-3">
+    <%= render partial: "sidebarLinks" %>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<script>  
+  var lat = 47.723818;
+  var lng = 13.0869397;
+
+  initialize(lat,lng); 
+
+  function initialize(lat,lng) 
+  {
+    geocoder = new google.maps.Geocoder();
+
+    var latLng  = new google.maps.LatLng(lat,lng);
+
+    var mapOptions = {
+      zoom: 8,
+      center: latLng
+    };
+    map = new google.maps.Map(document.getElementById('map'),
+        mapOptions);
+
+      var circleOptions = {
+        strokeColor: '#888888',
+        strokeOpacity: 0,
+        strokeWeight: 2,
+        fillColor: '#888888',
+        fillOpacity: 0,
+        map: map,
+        center: latLng,
+        radius: 0
+      }
+
+      cityCircle = new google.maps.Circle(circleOptions); 
+
+  }
+
+  <% for city in  ReferenceCities.all() %>
+
+  // first set the center point of the marker
+  var latlng = new google.maps.LatLng(<%= city.latLocation%>, <%= city.lngLocation%>);
+  // now, create the marker
+  var marker = new google.maps.Marker({
+    position: latlng,
+    map: map,
+    title:'<%= city.name %>'
+  });
+
+  <% end %>
+  
+
+</script>
