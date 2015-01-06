@@ -10,7 +10,12 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   # Example of regular route:
-  get 'statistic' => 'statistic#show'
+  get 'statistic/actual' => 'statistic#actual'
+  get 'statistic/history' => 'statistic#history'
+
+  get 'statistic/:cityId' => 'statistic#getCityData'
+
+
 
   get 'route/:origin/:destination' => 'routes#get_json'
 

@@ -1,10 +1,21 @@
 class StatisticController < ApplicationController
-  	def show
+  	def actual
+  		
+	 	#save
+	 	#city = ReferenceCities.where(name: "Neunkirchen").take
+
+	 	#getCheaptestPriceOfCity(city)
+	end
+
+	def history
+		#save
+	end
+  	def save
   		
 	 	@allCities = ReferenceCities.all()
 	 	@allCitiesPrices = " "
 	    for city in @allCities
-	        @allCitiesPrices += " "+city.name + " " + getCheaptestPriceOfCity(city).to_s + ""
+	        @allCitiesPrices += " " + city.name + " " + getCheaptestPriceOfCity(city).to_s + ""
 	    end
 
 	end
@@ -21,23 +32,55 @@ class StatisticController < ApplicationController
 	  	latSouthWest = city.latSouthWest
 
 
-		res = Net::HTTP.post_form(uri, "data" => "['','DIE','#{lngNorthEast}','#{latNorthEast}','#{lngSouthWest}','#{latSouthWest}']")
+		dieselPrice = Net::HTTP.post_form(uri, "data" => "['','DIE','#{lngNorthEast}','#{latNorthEast}','#{lngSouthWest}','#{latSouthWest}']")
+		petrolPrice = Net::HTTP.post_form(uri, "data" => "['','SUP','#{lngNorthEast}','#{latNorthEast}','#{lngSouthWest}','#{latSouthWest}']")
+
+		decode1 = ActiveSupport::JSON.decode(dieselPrice.body)
+		decode2 = ActiveSupport::JSON.decode(petrolPrice.body)
 
 
-		decode = ActiveSupport::JSON.decode(res.body)
+		#render :text => decode1
+		#render :text => decode1[0]["errorItems"][0]["msgText"]
 
-		sum1 = 0
-		
-		for i in 0..0
-			sum1 += decode[i]["spritPrice"][0]["amount"].to_f
+
+		if(dieselPrice.kind_of?(Net::HTTPSuccess) && petrolPrice.kind_of?(Net::HTTPSuccess))
+
+			sum1 = 0
+			sum2 = 0
+
+			for i in 0..4
+				sum1 += decode1[i]["spritPrice"][0]["amount"].to_f
+				sum2 += decode2[i]["spritPrice"][0]["amount"].to_f
+			end
+
+			sum1 /= 5
+			sum2 /= 5
+
+			averageDiesel = sum1.round(3)
+			averagePertrol = sum2.round(3)
+
+			minDiesel = decode1[0]["spritPrice"][0]["amount"].to_f
+			minPetrol = decode2[0]["spritPrice"][0]["amount"].to_f
+
+			insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
+
+			return averageDiesel.to_s;
+			#render :text => result
 		end
-
-		sum1 /= 1
-
-
-		return sum1.to_s;
-		#render :text => result
-
 		#render :text => res.body
+	end
+	def insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
+		priceDataset = PriceData.new
+		priceDataset.cityFk = city.id
+		priceDataset.minDiesel = minDiesel
+		priceDataset.minPetrol = minPetrol
+		priceDataset.averageDiesel = averageDiesel
+		priceDataset.averagePertrol = averagePertrol
+		priceDataset.save!
+
+	end
+	def getCityData
+		 @prices = PriceData.where(cityFk: params[:cityId])
+       	 render :json => @prices.to_json
 	end
 end
