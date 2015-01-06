@@ -16,18 +16,31 @@ class StatisticController < ApplicationController
 	end
 
 	def minMax
-
-		
+				#savePriceforAllCities
 	end
 
 	def savePriceforAllCities
 		for city in ReferenceCities.all()
-    	getCheaptestPriceOfCity(city)
+    	savePriceOfCity(city)
 		end
 	end
 
 	def savePriceOfCity(city)
+	
+		#render :text => decode1
+		#render :text => decode1[0]["errorItems"][0]["msgText"]
 
+		responseDiesel = getResponseFromApi(city,"DIE")
+		responsePetrol = getResponseFromApi(city,"SUP")
+
+		insert(city,getMinOfResponse(responseDiesel),getMinOfResponse(responsePetrol),getAverageOfResponse(responseDiesel),getAverageOfResponse(responsePetrol))
+
+		#render :text => result
+		#render :text => res.body
+
+	end
+
+	def getResponseFromApi(city,type)
 		uri = URI('http://www.spritpreisrechner.at/espritmap-app/GasStationServlet')
 
 		lngNorthEast = city.lngNorthEast
@@ -36,42 +49,26 @@ class StatisticController < ApplicationController
 		lngSouthWest = city.lngSouthWest
 		latSouthWest = city.latSouthWest
 
-		dieselPrice = Net::HTTP.post_form(uri, "data" => "['','DIE','#{lngNorthEast}','#{latNorthEast}','#{lngSouthWest}','#{latSouthWest}']")
-		petrolPrice = Net::HTTP.post_form(uri, "data" => "['','SUP','#{lngNorthEast}','#{latNorthEast}','#{lngSouthWest}','#{latSouthWest}']")
+		respone = Net::HTTP.post_form(uri, "data" => "['','#{type}','#{lngNorthEast}','#{latNorthEast}','#{lngSouthWest}','#{latSouthWest}']")
 
-		decode1 = ActiveSupport::JSON.decode(dieselPrice.body)
-		decode2 = ActiveSupport::JSON.decode(petrolPrice.body)
+		return ActiveSupport::JSON.decode(respone.body)
 
+	end
 
-		#render :text => decode1
-		#render :text => decode1[0]["errorItems"][0]["msgText"]
-
-
-		if(dieselPrice.kind_of?(Net::HTTPSuccess) && petrolPrice.kind_of?(Net::HTTPSuccess))
-
-		sum1 = 0
-		sum2 = 0
+	def getAverageOfResponse(respone)
+		sum = 0
 
 		for i in 0..4
-			sum1 += decode1[i]["spritPrice"][0]["amount"].to_f
-			sum2 += decode2[i]["spritPrice"][0]["amount"].to_f
+			sum += respone[i]["spritPrice"][0]["amount"].to_f
 		end
 
-		sum1 /= 5
-		sum2 /= 5
+		sum /= 5
 
-		averageDiesel = sum1.round(3)
-		averagePertrol = sum2.round(3)
+		return sum.round(3)
+	end
 
-		minDiesel = decode1[0]["spritPrice"][0]["amount"].to_f
-		minPetrol = decode2[0]["spritPrice"][0]["amount"].to_f
-
-		insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
-
-		#render :text => result
-		#render :text => res.body
-
-		end
+	def getMinOfResponse(respone)
+		return respone[0]["spritPrice"][0]["amount"].to_f
 	end
 
 	def insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
@@ -101,7 +98,7 @@ class StatisticController < ApplicationController
 		else
 			prices = PriceData.where(cityFk: params[:cityId])
 		end	
-		
+
 		sumDiesel = Array.new(14, 0)
 		sumPetrol = Array.new(14, 0)
 		
