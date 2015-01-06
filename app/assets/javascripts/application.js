@@ -17,6 +17,7 @@
 //= require bootstrap.min
 //= require_tree .
 //= require chart.min
+//= require jquery.tablesorter.min
 
   var polylines = [];
 
