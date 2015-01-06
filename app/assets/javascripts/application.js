@@ -67,12 +67,32 @@
       polylines[i].setMap(null);
     }
 
+// var marker1 = new google.maps.Marker({
+//     position: new google.maps.LatLng(path[path.length/2][0], path[path.length/2][1]),
+//     map: map,
+//     title:"Hello World!"
+// });
+
+// var marker2 = new google.maps.Marker({
+//     position: new google.maps.LatLng(path[path.length/2][0]+0.04, path[path.length/2][1]-0.06),
+//     map: map,
+//     title:"Hello World!"
+// });
+
+// var marker3 = new google.maps.Marker({
+//     position: new google.maps.LatLng(path[path.length/2][0]-0.04, path[path.length/2][1]+0.06),
+//     map: map,
+//     title:"Hello World!"
+// });
+
+
+
     // Draw on map
     polyline.setMap(map);
 
     map.fitBounds(new google.maps.LatLngBounds(bounds["path"]));
 
-    map.setCenter(coordinates[coordinates.length/2]);
+    map.setCenter(coordinates[Math.round(coordinates.length/2)]);
 
   }
 
