@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   # Example of regular route:
-  get 'statistic' => 'statistic#history'
   get 'statistic/actual' => 'statistic#actual'
   get 'statistic/history' => 'statistic#history'
 

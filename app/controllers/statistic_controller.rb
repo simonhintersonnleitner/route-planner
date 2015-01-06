@@ -2,8 +2,7 @@ class StatisticController < ApplicationController
   	def actual
   		
 	 	#save
-	 	#city = ReferenceCities.find(:name "Neunkirchen").take
-	 	#render :text => city
+	 	#city = ReferenceCities.where(name: "Neunkirchen").take
 
 	 	#getCheaptestPriceOfCity(city)
 	end
@@ -36,10 +35,15 @@ class StatisticController < ApplicationController
 		dieselPrice = Net::HTTP.post_form(uri, "data" => "['','DIE','#{lngNorthEast}','#{latNorthEast}','#{lngSouthWest}','#{latSouthWest}']")
 		petrolPrice = Net::HTTP.post_form(uri, "data" => "['','SUP','#{lngNorthEast}','#{latNorthEast}','#{lngSouthWest}','#{latSouthWest}']")
 
-		if(dieselPrice.kind_of?(Net::HTTPSuccess))
+		decode1 = ActiveSupport::JSON.decode(dieselPrice.body)
+		decode2 = ActiveSupport::JSON.decode(petrolPrice.body)
 
-			decode1 = ActiveSupport::JSON.decode(dieselPrice.body)
-			decode2 = ActiveSupport::JSON.decode(petrolPrice.body)
+
+		#render :text => decode1
+		#render :text => decode1[0]["errorItems"][0]["msgText"]
+
+
+		if(dieselPrice.kind_of?(Net::HTTPSuccess) && petrolPrice.kind_of?(Net::HTTPSuccess))
 
 			sum1 = 0
 			sum2 = 0
