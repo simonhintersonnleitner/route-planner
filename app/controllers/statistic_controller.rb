@@ -15,6 +15,8 @@ class StatisticController < ApplicationController
 
 	def minMax
 				#savePriceforAllCities
+				#render :json => PriceData.get_cheaptest_diesel_price
+				#render :json => PriceData.get_cheaptest_petrol_price
 	end
 
 	def savePriceforAllCities
@@ -123,7 +125,7 @@ class StatisticController < ApplicationController
 				end
 		end
 		
-  	render :json => pricePerWeekday.to_json  
+  	render :json => pricePerWeekday  
 
 	end
 

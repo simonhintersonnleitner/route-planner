@@ -1,8 +1,13 @@
 <div class="row">
   <div id="mainStats" class=" stats col-xs-12 col-md-9 ">
     <h3>Min/Max Statistik</h3>
-    
-   
+    <h4>Günstigster Preis:</h4>
+    <p>Diesel: <%= PriceData.get_cheaptest_diesel_price.minDiesel%></p>
+    <p>Super: <%= PriceData.get_cheaptest_petrol_price.minDiesel%></p>
+    <h4>Teuerster Preis *</h4>
+    <p>Diesel: <%= PriceData.get_priciest_diesel_price.minDiesel%></p>
+    <p>Super: <%= PriceData.get_priciest_petrol_price.minDiesel%></p>
+    <p>* teuerster Preis von den jeweils günstigsten Tankstellen</p>
   </div>
   <div id="sidebar" class="col-xs-12 col-md-3">
     <%= render partial: "sidebarLinks" %>
