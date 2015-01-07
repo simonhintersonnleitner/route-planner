@@ -11,9 +11,12 @@ Rails.application.routes.draw do
   get 'statistic/minMax' => 'statistic#minMax'
   get 'statistic/reference' => 'statistic#reference'
 
+  get 'statistic/save' => 'statistic#save'
+  get 'statistic/clean' => 'statistic#clean'
 
-  get 'statistic/getCityDataById/:cityId' => 'statistic#getCityDataById'
-  get 'statistic/getCityDataByIdSortedByWeekday/:cityId' => 'statistic#getCityDataByIdSortedByWeekday'
+
+  get 'statistic/getCityDataById/:cityId' => 'statistic#get_city_prices_by_id'
+  get 'statistic/getCityDataByIdSortedByWeekday/:cityId' => 'statistic#get_city_price_per_weekday_by_id'
 
   get 'route/:origin/:destination' => 'routes#get_json', format:true
   # :constraints => http://stackoverflow.com/questions/5621351/handle-rails-route-with-gps-parameter

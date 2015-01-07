@@ -37,7 +37,7 @@ class PriceData < ActiveRecord::Base
         priceBefore = prices[i];
       end 
     end
-    return count
+    return count.to_s + " datasets deleted"
   end
 
 end
