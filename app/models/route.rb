@@ -1,6 +1,7 @@
 class Route < ActiveRecord::Base
 
   require 'open-uri'
+  has_and_belongs_to_many :users
 
   @@url = 'http://maps.googleapis.com/maps/api/directions/json'
 
