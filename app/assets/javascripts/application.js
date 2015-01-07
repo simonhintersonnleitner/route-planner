@@ -30,6 +30,12 @@
       var destination = encodeURI($('#destination').val());
 
       garages = [];
+      
+      markers.forEach(function(marker){
+        marker.setMap(null);
+      });
+
+      markers = [];
 
       $.getJSON( "/route/"+origin+"/"+destination+".json", function() {})
       .done(function(data){
@@ -116,13 +122,25 @@
       });      
     }
 
+    var markers = [];
+
     function draw_garages_to_map(data)
     {
+
+      var marker;
+
       data.forEach(function(element,index,array){
-        new google.maps.Marker({
+        marker = new google.maps.Marker({
           position: new google.maps.LatLng(element['lat'], element['lng']),
           map: map
         }); 
+
+        google.maps.event.addListener(marker, 'click', function() {
+          showGarage(element['id']);
+        });
+
+        markers[element['id']] = marker;
+
       });
     }
 
@@ -155,7 +173,18 @@
           $div.append("<p><b>Super:</b> "+g["price_sup"]+"€</p>");
         else
           $div.append("<p><b>Diesel:</b> -</p>"); 
-        $div.append("<b>SHOW #</b>"+g["id"]); 
+      
+        $('#id'+g["id"]).on('click',function(){
+          showGarage(g["id"]);
+        });
+
+        $( "#id"+g["id"] ).hover( function(){
+          markers[g["id"]].setAnimation(google.maps.Animation.BOUNCE);
+        }, function(){
+          markers[g["id"]].setAnimation(null);
+        } );
+
+
       });
 
       $sidebar.css('overflow','scroll');
@@ -208,3 +237,20 @@
     { 
       $("body").removeClass("loading"); 
     }    
+
+    function showGarage(id)
+    {
+      $(".overlay").show();    
+      $("#garageModal").show();  
+
+      $('#garageModal').html("");
+      $('#garageModal').append("<h2>Tankstelle #"+id+"</h2>");
+
+
+    }
+
+    function closeGarage()
+    {
+      $(".overlay").hide();    
+      $("#garageModal").hide();    
+    }
