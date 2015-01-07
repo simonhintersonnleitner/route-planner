@@ -200,10 +200,46 @@ body.loading .modal {
   clear:both;
 }
 
+
 .padding {
   padding:15px;
 }
 
 .alert {
   margin-top:15px;
+}
+
+#legend
+{
+  margin-top: 5px;
+}
+#legend .item
+{
+ height: 15px;
+ float: left;
+ margin-bottom: 15px;
+ padding-right: 10px;
+}
+.colorbox
+{
+  height: 15px;
+  width: 15px;
+  margin: 2px;  
+  float: left;
+}
+.diesel
+{
+  background-color: rgba(191,27,0,1);
+}
+.diesel_averange
+{
+  background-color: rgba(64,9,0,1);
+}
+.super
+{
+  background-color: rgba(232,63,12,1);
+}
+.super_averange
+{
+  background-color: rgba(255,13,14,1);
 }

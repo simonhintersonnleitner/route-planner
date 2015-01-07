@@ -7,6 +7,13 @@
       <option value=<%= city.id %>><%= city.name %></option>
       <% end %>
     </select>
+    <div id="legend">
+        <div class="item"><div class="colorbox diesel"></div><b>Diesel</b>[min]</div>
+        <div class="item"><div class="colorbox diesel_averange"></div><b>Diesel</b>[Durchschnitt]</div>
+        <div class="item"><div class="colorbox super"></div><b>Super</b>[min]</div>
+        <div class="item"><div class="colorbox super_averange"></div><b>Super</b>[Durchschnitt]</div>
+    </div>
+    <div class="clear"></div>
     <div id="chartWrapper">
       <canvas id="myChart" width="1000" height="500"></canvas>
     </div>
@@ -21,8 +28,6 @@
 <script type="text/javascript">
 
 $('#city').change(update);
-
-
 
 var data = {
     labels: [],
