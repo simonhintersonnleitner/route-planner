@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   post 'login', to: 'users#authenticate'
   get 'logout', to: 'users#logout'
 
-  get 'test/:id', to: 'users#test'
+  get 'route/add/:id', to: 'users#add_route'
+  get 'route/remove/:id', to: 'users#remove_route'
+  get 'dashboard', to: 'users#dashboard'
 
 end

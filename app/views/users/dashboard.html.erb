@@ -1,0 +1,36 @@
+<div class="row">
+
+  <div id="main" class="col-xs-12 col-md-12">
+
+    <div class="padding">
+      
+    <h2>Dashboard</h2>
+
+    <p>Willkommen im Dashboard! Hier findest du eine Übersicht deiner gespeicherten Routen:</p>
+
+    <% @user.routes.each do |route| %>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <%= link_to route.origin+" -> "+route.destination, :controller => "routes", :action => "get_route", :id => route.id %> 
+
+          <div style="float:right;">
+            <%= link_to "Löschen", :controller => "users", :action => "remove_route", :id => route.id %>
+          </div>
+
+          <div class="clear"></div>
+
+        </div>
+      </div>
+    <% end %>
+
+    <% if(@user.routes.count == 0) %>
+      <b>Sie haben noch keine Routen hinzugefügt.</b>
+    <% end %>
+
+    </div>
+
+  </div>
+
+  <div class="clear"></div>
+
+</div>
