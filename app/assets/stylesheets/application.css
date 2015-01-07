@@ -118,6 +118,10 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
   margin:0px 0px 15px 0px;
 }
 
+#sidebar a.button.active {
+  font-weight:bold;
+}
+
 #sidebar a.add-route {
   text-align:center;
   color:#ffffff;
