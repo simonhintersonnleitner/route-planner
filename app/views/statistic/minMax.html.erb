@@ -37,6 +37,9 @@
             <td><%= ReferenceCities.where(id: id).take.name%><td>
             <td><%= PriceData.get_priciest_petrol_price.updated_at %></td>
           </tr>
+           <tr>
+            <td colspan='5'><p>* Der teuerste Preis bezieht sich auf die jeweils teuerste der 5 günstigsten Tankstellen</p></td>
+          </tr>
         </tbody>
       </table>
     </div>

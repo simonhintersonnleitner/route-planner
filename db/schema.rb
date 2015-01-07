@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107173530) do
+ActiveRecord::Schema.define(version: 20150107175837) do
 
   create_table "garages", force: true do |t|
     t.string   "lat"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20150107173530) do
     t.float    "averagePertrol", limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "maxPetrol",      limit: 24
+    t.float    "maxDiesel",      limit: 24
   end
 
   create_table "reference_cities", force: true do |t|
