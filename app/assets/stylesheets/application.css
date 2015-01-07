@@ -149,6 +149,21 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
   width:100%;
 }
 
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba( 0, 0, 0, 0.8 ) url('/assets/ajax-loader.gif') 50% 50% no-repeat;
+}
+
+body.loading .modal {
+  display: block;
+}
+
 .clear {
   clear:both;
 }
