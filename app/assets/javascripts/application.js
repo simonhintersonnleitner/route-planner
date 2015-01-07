@@ -21,7 +21,8 @@
 
   var polylines = [],
       garages   = [],
-      loading   = false;
+      loading   = false,
+      id        = 0;
 
   function get_route()
   {
@@ -34,6 +35,7 @@
       .done(function(data){
         if(data["distance"] == 0) alert("Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!"); 
         else {
+          id = data["id"];
           startLoading();
           draw_route(data);
         }
@@ -125,10 +127,19 @@
       });
     }
 
+    function draw_sidebar()
+    {
+      draw_garages_to_sidebar(garages);
+    }
+
     function draw_garages_to_sidebar(data)
     {
       $sidebar = $('#sidebar');
       $sidebar.text("");
+
+      $sidebar.append("<a href='#"+id+"' class='col-xs-12 col-md-12 add-route'><span class='glyphicon glyphicon-resize-plus' aria-hidden='true'></span> Route zum Account hinzufügen</a>");
+      $sidebar.append("<a href='javascript:sort_diesel();' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Diesel-Preis</a>");
+      $sidebar.append("<a href='javascript:sort_super();' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Super-Preis</a>");
 
       data.forEach(function(g)
       {
@@ -159,15 +170,31 @@
       });
     }
 
-    function sortByDiesel(a, b){
-      var x = a.price_die;
-      var y = b.price_die; 
-      return x === null ? -1 : y === null ? -1 : ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    function sort_diesel()
+    {
+      console.log("Sort by Diesel");
+      garages.sort(sort_by_diesel);
+      draw_sidebar();
     }
-    function sortBySuper(a, b){
-      var x = a.price_sup;
-      var y = b.price_sup; 
-      return x === null ? -1 : y === null ? -1 : ((x < y) ? -1 : ((x > y) ? 1 : 0));
+
+    function sort_super()
+    {
+      console.log("Sort by Super");
+      garages.sort(sort_by_super);
+      draw_sidebar();
+    }
+
+    function sort_by_diesel(a, b){
+      var x = parseFloat(a.price_die);
+      var y = parseFloat(b.price_die); 
+      
+      return isNaN(x) ? 1 : isNaN(y) ? -1 : x-y;
+    }
+    function sort_by_super(a, b){
+      var x = parseFloat(a.price_sup);
+      var y = parseFloat(b.price_sup); 
+      
+      return isNaN(x) ? 1 : isNaN(y) ? -1 : x-y;
     }
 
     function startLoading() 

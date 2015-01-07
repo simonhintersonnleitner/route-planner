@@ -48,7 +48,7 @@
 {
 	background-color: #ed4514;
   margin:0;
-  box-shadow:0px 0px 15px #666666;
+  box-shadow:0px 0px 15px #843822;
   border-bottom:0px;  
 }
 
@@ -110,6 +110,23 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
   position:absolute;
   box-shadow:0px 0px 4px #444444;
   padding:0px !important;
+}
+
+#sidebar a.button {
+  text-align:center;
+  background:#eeeeee;
+  margin:0px 0px 15px 0px;
+}
+
+#sidebar a.add-route {
+  text-align:center;
+  color:#ffffff;
+  background:#ed4514;
+  padding:10px 0px;
+}
+
+#sidebar a.button span {
+  margin:10px 0px;
 }
 
 #main {
