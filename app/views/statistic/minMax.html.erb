@@ -8,15 +8,15 @@
           </tr>
           <tr>
             <td>Diesel</td>
-            <td><%= PriceData.get_cheaptest_diesel_price.minDiesel %> €</td>
-            <% id = PriceData.get_cheaptest_diesel_price.cityFk %>
+            <td><%= PriceData.get_cheaptest_diesel_price.min_diesel %> €</td>
+            <% id = PriceData.get_cheaptest_diesel_price.city_fk %>
             <td><%= ReferenceCities.where(id: id).take.name%><td>
             <td><%= PriceData.get_cheaptest_diesel_price.updated_at %></td>
           </tr>
           <tr>
             <td>Super</td>
-            <td><%= PriceData.get_cheaptest_petrol_price.minPetrol %> €</td>
-            <% id = PriceData.get_cheaptest_petrol_price.cityFk %>
+            <td><%= PriceData.get_cheaptest_petrol_price.min_super %> €</td>
+            <% id = PriceData.get_cheaptest_petrol_price.city_fk %>
             <td><%= ReferenceCities.where(id: id).take.name%><td>
             <td><%= PriceData.get_cheaptest_petrol_price.updated_at %></td>
           </tr>
@@ -25,15 +25,15 @@
           </tr>
           <tr>
             <td>Diesel</td>
-            <td><%= PriceData.get_priciest_diesel_price.minDiesel %> €</td>
-            <% id = PriceData.get_priciest_diesel_price.cityFk %>
+            <td><%= PriceData.get_priciest_diesel_price.min_diesel %> €</td>
+            <% id = PriceData.get_priciest_diesel_price.city_fk %>
             <td><%= ReferenceCities.where(id: id).take.name%><td>
             <td><%= PriceData.get_priciest_diesel_price.updated_at %></td>
           </tr>
           <tr>
             <td>Super</td>
-            <td><%= PriceData.get_priciest_petrol_price.minPetrol %> €</td>
-            <% id = PriceData.get_priciest_petrol_price.cityFk %>
+            <td><%= PriceData.get_priciest_petrol_price.min_super %> €</td>
+            <% id = PriceData.get_priciest_petrol_price.city_fk %>
             <td><%= ReferenceCities.where(id: id).take.name%><td>
             <td><%= PriceData.get_priciest_petrol_price.updated_at %></td>
           </tr>

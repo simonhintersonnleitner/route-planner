@@ -33,10 +33,10 @@ class StatisticController < ApplicationController
 	
 		#render :text => decode1[0]["errorItems"][0]["msgText"]
 
-		responseDiesel = getResponseFromApi(city,"DIE")
-		responsePetrol = getResponseFromApi(city,"SUP")
+		response_diesel = getResponseFromApi(city,"DIE")
+		response_super = getResponseFromApi(city,"SUP")
 
-		insert(city,getMinOfResponse(responseDiesel),getMinOfResponse(responsePetrol),getAverageOfResponse(responseDiesel),getAverageOfResponse(responsePetrol),getMaxOfResponse(responseDiesel),getMaxOfResponse(responsePetrol))
+		insert(city,getMinOfResponse(response_diesel),getMinOfResponse(response_super),getAverageOfResponse(response_diesel),getAverageOfResponse(response_super),getMaxOfResponse(response_diesel),getMaxOfResponse(response_super))
 
 		#render :text => res.body
 
@@ -45,13 +45,13 @@ class StatisticController < ApplicationController
 	def getResponseFromApi(city,type)
 		uri = URI('http://www.spritpreisrechner.at/espritmap-app/GasStationServlet')
 
-		lngNorthEast = city.lngNorthEast
-		latNorthEast = city.latNorthEast
+		lng_north_east = city.lng_north_east
+		lat_north_east = city.lat_north_east
 
-		lngSouthWest = city.lngSouthWest
-		latSouthWest = city.latSouthWest
+		lng_south_west = city.lng_south_west
+		lat_south_west = city.lat_south_west
 
-		respone = Net::HTTP.post_form(uri, "data" => "['','#{type}','#{lngNorthEast}','#{latNorthEast}','#{lngSouthWest}','#{latSouthWest}']")
+		respone = Net::HTTP.post_form(uri, "data" => "['','#{type}','#{lng_north_east}','#{lat_north_east}','#{lng_south_west}','#{lat_south_west}']")
 
 		return ActiveSupport::JSON.decode(respone.body)
 
@@ -77,15 +77,15 @@ class StatisticController < ApplicationController
 		return respone[4]["spritPrice"][0]["amount"].to_f
 	end
 
-	def insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol,maxDiesel,maxPetrol)
+	def insert(city,min_diesel,min_super,average_diesel,average_super,max_diesel,max_super)
 		priceDataset = PriceData.new
-		priceDataset.cityFk = city.id
-		priceDataset.minDiesel = minDiesel
-		priceDataset.minPetrol = minPetrol
-		priceDataset.averageDiesel = averageDiesel
-		priceDataset.averagePertrol = averagePertrol
-		priceDataset.maxDiesel = maxDiesel
-		priceDataset.maxPetrol = maxPetrol
+		priceDataset.city_fk = city.id
+		priceDataset.min_diesel = min_diesel
+		priceDataset.min_super = min_super
+		priceDataset.average_diesel = average_diesel
+		priceDataset.average_super = average_super
+		priceDataset.max_diesel = max_diesel
+		priceDataset.max_super = max_super
 		priceDataset.save!
 	end
 
@@ -93,7 +93,7 @@ class StatisticController < ApplicationController
 		if(params[:cityId] == "all")
 			prices = PriceData.all()
 		else
-			prices = PriceData.where(cityFk: params[:cityId])
+			prices = PriceData.where(city_fk: params[:cityId])
 		end	
 		render :json => prices.to_json
 	end
@@ -104,38 +104,38 @@ class StatisticController < ApplicationController
 		if(params[:cityId] == "all")
 			prices = PriceData.all()
 		else
-			prices = PriceData.where(cityFk: params[:cityId])
+			prices = PriceData.where(city_fk: params[:cityId])
 		end	
 
-		sumDiesel = Array.new(14, 0)
-		sumPetrol = Array.new(14, 0)
+		sum_diesel = Array.new(14, 0)
+		sum_super = Array.new(14, 0)
 		
 		for price in prices
 			d = DateTime.parse(price.updated_at.to_s)
-			sumDiesel[d.wday] += price.averageDiesel
-			sumDiesel[d.wday+7] += 1
-			sumPetrol[d.wday] += price.averagePertrol
-			sumPetrol[d.wday+7] += 1
+			sum_diesel[d.wday] += price.average_diesel
+			sum_diesel[d.wday+7] += 1
+			sum_super[d.wday] += price.average_super
+			sum_super[d.wday+7] += 1
 		end
 
 		#create json response object
-		pricePerWeekday = Array.new(7,0)
+		price_per_weekday = Array.new(7,0)
 
 		for i in 0..6
-				if sumDiesel[i+7] != 0
-					pricePerWeekday[i] = {
+				if sum_diesel[i+7] != 0
+					price_per_weekday[i] = {
     			:weekday => i,
-    			:averageDiesel => ((sumDiesel[i])/sumDiesel[i+7]).round(3),
-    			:averagePetrol => ((sumPetrol[i])/sumPetrol[i+7]).round(3)}
+    			:average_diesel => ((sum_diesel[i])/sum_diesel[i+7]).round(3),
+    			:average_super => ((sum_super[i])/sum_super[i+7]).round(3)}
 				else
-					pricePerWeekday[i] = {
+					price_per_weekday[i] = {
     			:weekday => i,
-    			:averageDiesel => 0,
-    			:averagePetrol => 0}
+    			:average_diesel => 0,
+    			:average_super => 0}
 				end
 		end
 		
-  	render :json => pricePerWeekday  
+  	render :json => price_per_weekday  
 
 	end
 

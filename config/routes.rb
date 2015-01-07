@@ -25,4 +25,6 @@ Rails.application.routes.draw do
   post 'login', to: 'users#authenticate'
   get 'logout', to: 'users#logout'
 
+  get 'test/:id', to: 'users#test'
+
 end

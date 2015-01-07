@@ -14,15 +14,15 @@
       </thead>
       <tbody>
         <% for city in  ReferenceCities.all()
-        prices = PriceData.where(cityFk: city.id).last
+        prices = PriceData.where(city_fk: city.id).last
         if prices != nil
         %>
         <tr>
           <td><%= city.name %></td>
-          <td><%= prices.minDiesel.to_s %></td>
-          <td><%= prices.averageDiesel.to_s %></td>
-          <td><%= prices.minPetrol.to_s %></td>
-          <td><%= prices.averagePertrol.to_s %></td>
+          <td><%= prices.min_diesel.to_s %></td>
+          <td><%= prices.average_diesel.to_s %></td>
+          <td><%= prices.min_super.to_s %></td>
+          <td><%= prices.average_super.to_s %></td>
           <td><%= prices.updated_at.to_s %></td>
         </tr>
         <% end %>
