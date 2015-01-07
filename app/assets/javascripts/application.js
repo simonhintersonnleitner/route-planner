@@ -136,7 +136,7 @@
       $sidebar = $('#sidebar');
       $sidebar.text("");
 
-      $sidebar.append("<a href='#"+id+"' class='col-xs-12 col-md-12 add-route'><span class='glyphicon glyphicon-resize-plus' aria-hidden='true'></span> Route zum Account hinzufügen</a>");
+      $sidebar.append("<a href='/route/add/"+id+"' class='col-xs-12 col-md-12 add-route'><span class='glyphicon glyphicon-resize-plus' aria-hidden='true'></span> Route zum Account hinzufügen</a>");
       $sidebar.append("<a id='dieselSort' href='javascript:sort_diesel();' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Diesel-Preis</a>");
       $sidebar.append("<a id='superSort' href='javascript:sort_super();' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Super-Preis</a>");
 

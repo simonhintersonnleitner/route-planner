@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
-  before_action :loggedIn, only: [:new,:create,:login]
-  before_action :loggedOut, only: [:logout]
+  before_action :loggedIn, only: [:add_route]
+  before_action :loggedOut, only: [:new,:create,:login]
 
   def new
     @user = User.new
@@ -26,16 +26,56 @@ class UsersController < ApplicationController
     user = User.authenticate(params[:username_or_email],params[:login_password])
     if user
       session[:userID] = user.id
-      redirect_to root_path
+      redirect_to :action => "dashboard"
     else
-      flash[:error] = "Invalid Username or Password"
+      flash[:error] = "Benutzername oder Passwort falsch"
       render "login"  
     end
+  end
+
+  def dashboard
+    @user = User.find(session[:userID])
   end
 
   def logout
     session[:userID] = nil
     redirect_to root_path
+  end
+
+  def add_route
+    
+    @user = User.find(session[:userID])
+    @route = Route.find(params[:id]) if Route.exists?(params[:id])
+
+    if(@route == nil)
+      flash[:error] = "Diese Route konnte nicht gefunden werden."
+    elsif(@user.routes.exists?(params[:id]))
+      flash[:error] = "Diese Route hast du bereits hinzugefügt!"
+    else
+      @user.routes.push(@route)
+      flash[:success] = "Route erfolgreich hinzugefügt!"
+    end
+
+    render 'dashboard'
+
+  end
+
+  def remove_route
+
+    @user = User.find(session[:userID])
+    @route = Route.find(params[:id]) if Route.exists?(params[:id])
+
+    if(@route == nil)
+      flash[:error] = "Diese Route konnte nicht gefunden werden."
+    elsif(!@user.routes.exists?(params[:id]))
+      flash[:error] = "Diese Route ist nicht mit deinem Profil verknüpft!"
+    else
+      @user.routes.delete(@route)
+      flash[:success] = "Route erfolgreich entfernt."
+    end
+
+    render 'dashboard'
+
   end
 
 private
@@ -45,11 +85,12 @@ private
   end
 
   def loggedIn
-    redirect_to root_path unless !session[:userID]
+    flash[:error] = "Du musst eingeloggt sein, um diese Aktion ausführen zu können"
+    redirect_to root_path unless session[:userID]
   end
 
   def loggedOut
-    redirect_to root_path unless session[:userID]
+    redirect_to root_path unless !session[:userID]
   end
 
 end

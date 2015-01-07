@@ -51,10 +51,10 @@
 
 							<% if(isLoggedIn() == true) %>
 
-								<% if(params[:controller] == "users" && params[:action] == "dashboard") %>
-									<li class="active"><a href="#">Meine Routen</a></li>
+								<% if(params[:controller] == "users" || params[:controller] == "routes") %>
+									<li class="active"><%= link_to "Meine Routen", controller: "users", action: "dashboard" %></li>
 								<% else %>
-									<li><a href="#">Meine Routen</a></li>
+									<li><%= link_to "Meine Routen", controller: "users", action: "dashboard" %></li>
 								<% end %>
 								
 								<li><%= link_to "Logout", controller: "users", action: "logout" %></li>
