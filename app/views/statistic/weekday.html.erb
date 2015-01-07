@@ -4,7 +4,7 @@
 
     <select id="city" size="1">
       <option value='all'>Alle Orte/Städte</option>
-      <% for city in  ReferenceCities.all() %>
+      <% for city in  ReferenceCities.all().order(name: :asc) %>
       <option value=<%= city.id %>><%= city.name %></option>
       <% end %>
     </select>

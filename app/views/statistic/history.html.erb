@@ -3,10 +3,11 @@
     <h3>Preisverlauf</h3>
 
     <select id="city" size="1">
-      <% for city in  ReferenceCities.all() %>
+      <% for city in  ReferenceCities.all().order(name: :asc) %>
       <option value=<%= city.id %>><%= city.name %></option>
       <% end %>
     </select>
+    <input type="checkbox" id="average" value="average" checked> Durchschnittwerte anzeigen<br>
     <div id="legend">
         <div class="item"><div class="colorbox diesel"></div><b>Diesel</b>[min]</div>
         <div class="item"><div class="colorbox diesel_averange"></div><b>Diesel</b>[Durchschnitt]</div>
@@ -28,6 +29,7 @@
 <script type="text/javascript">
 
 $('#city').change(update);
+$('#average').change(update);
 
 var data = {
     labels: [],
@@ -106,8 +108,11 @@ function update(e) {
 
       data.datasets[0].data.push(json[i].min_diesel);
       data.datasets[1].data.push(json[i].min_super);
-      data.datasets[2].data.push(json[i].average_diesel);
-      data.datasets[3].data.push(json[i].average_super);
+      if($('#average').is(':checked'))
+      {
+        data.datasets[2].data.push(json[i].average_diesel);
+        data.datasets[3].data.push(json[i].average_super);
+      }
     };
       myLineChart.Line(data);
 
