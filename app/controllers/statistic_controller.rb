@@ -19,7 +19,7 @@ class StatisticController < ApplicationController
 
 	def minMax
 				#savePriceforAllCities
-				#render :json => PriceData.get_cheaptest_diesel_price
+				#render :json => 				PriceData.clean
 				#render :json => PriceData.get_cheaptest_petrol_price
 	end
 
@@ -133,17 +133,6 @@ class StatisticController < ApplicationController
 
 	end
 
-	def clean
-		cities = ReferenceCities.all()
-		for city in cities
-			priceBefore
-			prices = PriceData.where(cityFk: city.id)
-			for price in prices
-				#if(price.minDiesel == priceBefore.minDiesel)
-				#d = DateTime.parse(price.updated_at)
-				#priceBefore = price;
-			end	
-		end
-	end
+	
 
 end
