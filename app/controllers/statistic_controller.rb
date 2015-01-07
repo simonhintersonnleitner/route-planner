@@ -36,7 +36,7 @@ class StatisticController < ApplicationController
 		responseDiesel = getResponseFromApi(city,"DIE")
 		responsePetrol = getResponseFromApi(city,"SUP")
 
-		insert(city,getMinOfResponse(responseDiesel),getMinOfResponse(responsePetrol),getAverageOfResponse(responseDiesel),getAverageOfResponse(responsePetrol))
+		insert(city,getMinOfResponse(responseDiesel),getMinOfResponse(responsePetrol),getAverageOfResponse(responseDiesel),getAverageOfResponse(responsePetrol),getMaxOfResponse(responseDiesel),getMaxOfResponse(responsePetrol))
 
 		#render :text => res.body
 
@@ -73,13 +73,19 @@ class StatisticController < ApplicationController
 		return respone[0]["spritPrice"][0]["amount"].to_f
 	end
 
-	def insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol)
+	def getMaxOfResponse(respone)
+		return respone[4]["spritPrice"][0]["amount"].to_f
+	end
+
+	def insert(city,minDiesel,minPetrol,averageDiesel,averagePertrol,maxDiesel,maxPetrol)
 		priceDataset = PriceData.new
 		priceDataset.cityFk = city.id
 		priceDataset.minDiesel = minDiesel
 		priceDataset.minPetrol = minPetrol
 		priceDataset.averageDiesel = averageDiesel
 		priceDataset.averagePertrol = averagePertrol
+		priceDataset.maxDiesel = maxDiesel
+		priceDataset.maxPetrol = maxPetrol
 		priceDataset.save!
 	end
 

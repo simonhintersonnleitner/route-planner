@@ -2,19 +2,19 @@ class PriceData < ActiveRecord::Base
 
   def self.get_cheaptest_diesel_price
     min = self.minimum(:minDiesel)
-    return self.where(minDiesel: min).take
+    return self.where(minDiesel: min).last
   end
   def self.get_cheaptest_petrol_price
     min = self.minimum(:minPetrol)
-    return self.where(minPetrol: min).take
+    return self.where(minPetrol: min).last
   end
   def self.get_priciest_diesel_price
-    max = self.maximum(:minDiesel)
-    return self.where(minDiesel: max).take
+    max = self.maximum(:maxDiesel)
+    return self.where(maxDiesel: max).last
   end
    def self.get_priciest_petrol_price
-    max = self.maximum(:minPetrol)
-    return self.where(minPetrol: max).take
+    max = self.maximum(:maxPetrol)
+    return self.where(maxPetrol: max).last
   end
 
   def self.clean
