@@ -118,11 +118,19 @@
 
     function draw_garages_to_map(data)
     {
+
+      var marker;
+
       data.forEach(function(element,index,array){
-        new google.maps.Marker({
+        marker = new google.maps.Marker({
           position: new google.maps.LatLng(element['lat'], element['lng']),
           map: map
         }); 
+
+        google.maps.event.addListener(marker, 'click', function() {
+          showGarage(element['id']);
+        });
+
       });
     }
 
@@ -155,7 +163,12 @@
           $div.append("<p><b>Super:</b> "+g["price_sup"]+"€</p>");
         else
           $div.append("<p><b>Diesel:</b> -</p>"); 
-        $div.append("<b>SHOW #</b>"+g["id"]); 
+      
+        $('#id'+g["id"]).on('click',function(){
+          showGarage(g["id"]);
+        });
+
+
       });
 
       $sidebar.css('overflow','scroll');
@@ -208,3 +221,29 @@
     { 
       $("body").removeClass("loading"); 
     }    
+
+    function showGarage(id)
+    {
+      $(".overlay").show();    
+      $("#garageModal").show();  
+
+      $('#garageModal').html("");
+      $('#garageModal').append("<h2>Tankstelle #"+id+"</h2>");
+
+
+    }
+
+    function closeGarage()
+    {
+      $(".overlay").hide();    
+      $("#garageModal").hide();    
+    }
+
+     $(document).ready(function() {
+
+        $('.overlay').on('click',function(){
+          closeGarage();
+        });
+
+    });   
+

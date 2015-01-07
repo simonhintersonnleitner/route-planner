@@ -181,10 +181,10 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
   margin-bottom:100px;
 }
 
-.modal {
+.modal, .overlay{
   display: none;
   position: fixed;
-  z-index: 99999;
+  z-index: 999;
   top: 0;
   left: 0;
   height: 100%;
@@ -192,8 +192,25 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
   background: rgba( 0, 0, 0, 0.8 ) url('/assets/ajax-loader.gif') 50% 50% no-repeat;
 }
 
+.overlay {
+  background:rgba(0,0,0,0.6);
+  z-index:9999;
+}
+
 body.loading .modal {
   display: block;
+  z-index:999999;
+}
+
+#garageModal {
+  padding:15px 20px;
+  box-shadow:0px 0px 10px #111;
+  display:none;
+  z-index:9999;
+  position:absolute;
+  top:20%;
+  left:50%;
+  background:#fff;
 }
 
 .clear {
