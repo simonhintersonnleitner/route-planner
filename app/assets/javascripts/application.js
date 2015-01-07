@@ -30,6 +30,12 @@
       var destination = encodeURI($('#destination').val());
 
       garages = [];
+      
+      markers.forEach(function(marker){
+        marker.setMap(null);
+      });
+
+      markers = [];
 
       $.getJSON( "/route/"+origin+"/"+destination+".json", function() {})
       .done(function(data){
@@ -116,6 +122,8 @@
       });      
     }
 
+    var markers = [];
+
     function draw_garages_to_map(data)
     {
 
@@ -130,6 +138,8 @@
         google.maps.event.addListener(marker, 'click', function() {
           showGarage(element['id']);
         });
+
+        markers[element['id']] = marker;
 
       });
     }
@@ -167,6 +177,12 @@
         $('#id'+g["id"]).on('click',function(){
           showGarage(g["id"]);
         });
+
+        $( "#id"+g["id"] ).hover( function(){
+          markers[g["id"]].setAnimation(google.maps.Animation.BOUNCE);
+        }, function(){
+          markers[g["id"]].setAnimation(null);
+        } );
 
 
       });
@@ -238,12 +254,3 @@
       $(".overlay").hide();    
       $("#garageModal").hide();    
     }
-
-     $(document).ready(function() {
-
-        $('.overlay').on('click',function(){
-          closeGarage();
-        });
-
-    });   
-

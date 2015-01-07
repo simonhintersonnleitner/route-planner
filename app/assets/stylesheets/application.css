@@ -177,6 +177,11 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
   padding:10px 5px;
 }
 
+.tankstelle:hover {
+  background:#FFD699;
+  cursor:pointer;
+}
+
 .tankstelle:last-child {
   margin-bottom:100px;
 }
