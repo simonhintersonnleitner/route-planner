@@ -4,7 +4,7 @@
       <table class="table table-striped table-hover ">
         <tbody>
           <tr>
-            <td colspan='5'><h4>günstigster Preis</h4></td>
+            <td colspan='5'><h4>günstigster Preis [Allzeit]</h4></td>
           </tr>
           <tr>
             <td>Diesel</td>
@@ -15,30 +15,64 @@
           </tr>
           <tr>
             <td>Super</td>
-            <td><%= PriceData.get_cheaptest_petrol_price.min_super %> €</td>
-            <% id = PriceData.get_cheaptest_petrol_price.city_fk %>
+            <td><%= PriceData.get_cheaptest_super_price.min_super %> €</td>
+            <% id = PriceData.get_cheaptest_super_price.city_fk %>
             <td><%= ReferenceCities.where(id: id).take.name%><td>
-            <td><%= PriceData.get_cheaptest_petrol_price.updated_at %></td>
+            <td><%= PriceData.get_cheaptest_super_price.updated_at %></td>
           </tr>
           <tr>
-            <td colspan='5'><h4>teuerster Preis *</h4></td>
+            <td colspan='5'><h4>teuerster Preis [Allzeit] *</h4></td>
           </tr>
           <tr>
             <td>Diesel</td>
-            <td><%= PriceData.get_priciest_diesel_price.min_diesel %> €</td>
+            <td><%= PriceData.get_priciest_diesel_price.max_diesel %> €</td>
             <% id = PriceData.get_priciest_diesel_price.city_fk %>
             <td><%= ReferenceCities.where(id: id).take.name%><td>
             <td><%= PriceData.get_priciest_diesel_price.updated_at %></td>
           </tr>
           <tr>
             <td>Super</td>
-            <td><%= PriceData.get_priciest_petrol_price.min_super %> €</td>
-            <% id = PriceData.get_priciest_petrol_price.city_fk %>
+            <td><%= PriceData.get_priciest_super_price.max_super %> €</td>
+            <% id = PriceData.get_priciest_super_price.city_fk %>
             <td><%= ReferenceCities.where(id: id).take.name%><td>
-            <td><%= PriceData.get_priciest_petrol_price.updated_at %></td>
+            <td><%= PriceData.get_priciest_super_price.updated_at %></td>
           </tr>
+          <tr>
+            <td colspan='5'><h4>günstigster Preis [Tag]</h4></td>
+          </tr>
+          <tr>
+            <td>Diesel</td>
+            <td><%= PriceData.get_cheaptest_diesel_price_by_day.min_diesel %> €</td>
+            <% id = PriceData.get_cheaptest_diesel_price_by_day.city_fk %>
+            <td><%= ReferenceCities.where(id: id).take.name%><td>
+            <td><%= PriceData.get_cheaptest_diesel_price_by_day.updated_at %></td>
+          </tr>
+          <tr>
+            <td>Super</td>
+            <td><%= PriceData.get_cheaptest_super_price_by_day.min_super %> €</td>
+            <% id = PriceData.get_cheaptest_super_price_by_day.city_fk %>
+            <td><%= ReferenceCities.where(id: id).take.name%><td>
+            <td><%= PriceData.get_cheaptest_super_price_by_day.updated_at %></td>
+          </tr>
+          <tr>
+            <td colspan='5'><h4>teuerster Preis [Tag] *</h4></td>
+          </tr>
+          <tr>
+            <td>Diesel</td>
+            <td><%= PriceData.get_priciest_diesel_price_by_day.max_diesel %> €</td>
+            <% id = PriceData.get_priciest_diesel_price_by_day.city_fk %>
+            <td><%= ReferenceCities.where(id: id).take.name%><td>
+            <td><%= PriceData.get_priciest_diesel_price_by_day.updated_at %></td>
+          </tr>
+          <tr>
+            <td>Super</td>
+            <td><%= PriceData.get_priciest_super_price_by_day.max_super %> €</td>
+            <% id = PriceData.get_priciest_super_price_by_day.city_fk %>
+            <td><%= ReferenceCities.where(id: id).take.name%><td>
+            <td><%= PriceData.get_priciest_super_price_by_day.updated_at %></td>
+          </tr>           
            <tr>
-            <td colspan='5'><p>* Der teuerste Preis bezieht sich auf die jeweils teuerste der 5 günstigsten Tankstellen</p></td>
+            <td colspan='5'><p>* Der. teuerste Preis bezieht sich auf die jeweils teuerste der 5 günstigsten Tankstellen</p></td>
           </tr>
         </tbody>
       </table>

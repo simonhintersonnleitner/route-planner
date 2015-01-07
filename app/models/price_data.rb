@@ -4,7 +4,7 @@ class PriceData < ActiveRecord::Base
     min = self.minimum(:min_diesel)
     return self.where(min_diesel: min).last
   end
-  def self.get_cheaptest_petrol_price
+  def self.get_cheaptest_super_price
     min = self.minimum(:min_super)
     return self.where(min_super: min).last
   end
@@ -12,8 +12,24 @@ class PriceData < ActiveRecord::Base
     max = self.maximum(:max_diesel)
     return self.where(max_diesel: max).last
   end
-   def self.get_priciest_petrol_price
+   def self.get_priciest_super_price
     max = self.maximum(:max_super)
+    return self.where(max_super: max).last
+  end
+   def self.get_cheaptest_diesel_price_by_day
+    min =  self.all.where(created_at: (Time.now.midnight)..(Time.now)).minimum(:min_diesel)
+    return  self.where(min_diesel: min).last
+  end
+  def self.get_cheaptest_super_price_by_day
+     min =  self.all.where(created_at: (Time.now.midnight)..(Time.now)).minimum(:min_super)
+    return self.where(min_super: min).last
+  end
+  def self.get_priciest_diesel_price_by_day
+     max =  self.all.where(created_at: (Time.now.midnight)..(Time.now)).maximum(:max_diesel)
+    return self.where(max_diesel: max).last
+  end
+  def self.get_priciest_super_price_by_day
+    max =  self.all.where(created_at: (Time.now.midnight)..(Time.now)).maximum(:max_super)
     return self.where(max_super: max).last
   end
 
