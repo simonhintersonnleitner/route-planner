@@ -8,6 +8,11 @@
       <option value=<%= city.id %>><%= city.name %></option>
       <% end %>
     </select>
+     <div id="legend">
+        <div class="item"><div class="colorbox diesel"></div><b>Diesel</b>[Durchschnitt]</div>
+        <div class="item"><div class="colorbox super"></div><b>Super</b>[Durchschnitt]</div>
+    </div>
+    <div class="clear"></div>
     <div id="chartWrapper">
       <canvas id="myChart" width="1000" height="300"></canvas>
     </div>
