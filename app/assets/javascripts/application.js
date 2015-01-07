@@ -159,8 +159,21 @@
       $sidebar.append("<a id='dieselSort' href='javascript:sort_diesel();' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Diesel-Preis</a>");
       $sidebar.append("<a id='superSort' href='javascript:sort_super();' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Super-Preis</a>");
 
-      data.forEach(function(g)
+      var all = [];
+
+      // unique array
+      data.forEach(function(g){
+        if($.grep(all, function(o){ return o.id == g.id; }).length == 0)
+          all.push(g);
+      });
+
+      console.log(all);
+
+      all.forEach(function(g)
       {
+
+
+
         $sidebar.append("<div id='id"+g["id"]+"' class='tankstelle'></div>");
         $div = $sidebar.find('#id'+g["id"]);
 
