@@ -132,7 +132,8 @@
       data.forEach(function(element,index,array){
         marker = new google.maps.Marker({
           position: new google.maps.LatLng(element['lat'], element['lng']),
-          map: map
+          map: map,
+          title: "Klicken für Details"
         }); 
 
         google.maps.event.addListener(marker, 'click', function() {
@@ -240,12 +241,11 @@
 
     function showGarage(id)
     {
+
+      $('#garageModal').html("").html($('#id'+id).html());
+
       $(".overlay").show();    
       $("#garageModal").show();  
-
-      $('#garageModal').html("");
-      $('#garageModal').append("<h2>Tankstelle #"+id+"</h2>");
-
 
     }
 
