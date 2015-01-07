@@ -19,7 +19,9 @@
 //= require chart.min
 //= require jquery.tablesorter.min
 
-  var polylines = [];
+  var polylines = [],
+      garages   = [],
+      loading   = false;
 
   function get_route()
   {
@@ -29,10 +31,14 @@
       $.getJSON( "/route/"+origin+"/"+destination+".json", function() {})
       .done(function(data){
         if(data["distance"] == 0) alert("Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!"); 
-        else draw_route(data);
+        else {
+          startLoading();
+          draw_route(data);
+        }
       }) 
       .fail(function() {    
         alert("Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!"); 
+        stopLoading();
       });
 
   }
@@ -68,40 +74,21 @@
       polylines[i].setMap(null);
     }
 
-    var marker;
-
-    var x = Math.round(path.length / (data["distance"]/ 1000 / 50) );
-
-    for(i = 0; i < path.length; i+=x)
-    {
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(path[i][0], path[i][1]),
-        map: map
-      }); 
-    }
-
-// var marker1 = new google.maps.Marker({
-//     position: new google.maps.LatLng(path[path.length/2][0], path[path.length/2][1]),
-//     map: map,
-//     title:"Hello World!"
-// });
-
-// var marker2 = new google.maps.Marker({
-//     position: new google.maps.LatLng(path[path.length/2][0]+0.04, path[path.length/2][1]-0.06),
-//     map: map,
-//     title:"Hello World!"
-// });
-
-// var marker3 = new google.maps.Marker({
-//     position: new google.maps.LatLng(path[path.length/2][0]-0.04, path[path.length/2][1]+0.06),
-//     map: map,
-//     title:"Hello World!"
-// });
-
-
-
     // Draw on map
     polyline.setMap(map);
+
+    // Anzahl Zwischenschritte berechnen
+    var x = Math.round(path.length / (data["distance"]/ 1000 / 40) );
+
+    // Tankstellen finden
+    for(i = 0; i < path.length-1; i+=x)
+    {    
+      get_garages(path[i][0],path[i][1],false);
+    }
+    get_garages(path[path.length-1][0],path[path.length-1][1],true);
+
+    // Ladebildschirm stoppen
+    //stopLoading();
 
     map.fitBounds(new google.maps.LatLngBounds(bounds["path"]));
 
@@ -109,3 +96,61 @@
 
   }
 
+    function get_garages(lat,lng,last)
+    {
+      $.getJSON( "/garage/"+lat+"/"+lng+".json", function() {})
+      .done(function(data){       
+        garages = $.merge(garages, data);
+        draw_garages_to_map(data);
+        draw_garages_to_sidebar(data);
+        if(last==true) stopLoading();
+      }) 
+      .fail(function() {    
+        alert("Leider ist beim Abruf der Tankstellen ein Fehler aufgetreten. Bitte versuchen Sie es erneut!"); 
+        if(last==true) stopLoading();
+      });      
+    }
+
+    function draw_garages_to_map(data)
+    {
+      data.forEach(function(element,index,array){
+        new google.maps.Marker({
+          position: new google.maps.LatLng(element['lat'], element['lng']),
+          map: map
+        }); 
+      });
+    }
+
+    function draw_garages_to_sidebar(data)
+    {
+
+    }
+
+    function g_print()
+    {
+      garages.forEach(function(g){
+        console.log(g["price_die"]);
+      });
+    }
+
+    function sortByDiesel(a, b){
+      var x = a.price_die;
+      var y = b.price_die; 
+      return x === null ? -1 : y === null ? -1 : ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    }
+    function sortBySuper(a, b){
+      var x = a.price_sup;
+      var y = b.price_sup; 
+      return x === null ? -1 : y === null ? -1 : ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    }
+
+    function startLoading() 
+    { 
+      $("body").addClass("loading");
+      loading = true; 
+    }
+    
+    function stopLoading()  
+    { 
+      $("body").removeClass("loading"); 
+    }    
