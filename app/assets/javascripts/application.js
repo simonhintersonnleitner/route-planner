@@ -28,6 +28,8 @@
       var origin = encodeURI($('#origin').val());
       var destination = encodeURI($('#destination').val());
 
+      garages = [];
+
       $.getJSON( "/route/"+origin+"/"+destination+".json", function() {})
       .done(function(data){
         if(data["distance"] == 0) alert("Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!"); 
@@ -102,8 +104,10 @@
       .done(function(data){       
         garages = $.merge(garages, data);
         draw_garages_to_map(data);
-        draw_garages_to_sidebar(data);
-        if(last==true) stopLoading();
+        if(last==true){
+          stopLoading();
+          draw_garages_to_sidebar(garages);
+        }
       }) 
       .fail(function() {    
         alert("Leider ist beim Abruf der Tankstellen ein Fehler aufgetreten. Bitte versuchen Sie es erneut!"); 
@@ -123,6 +127,28 @@
 
     function draw_garages_to_sidebar(data)
     {
+      $sidebar = $('#sidebar');
+      $sidebar.text("");
+
+      data.forEach(function(g)
+      {
+        $sidebar.append("<div id='id"+g["id"]+"' class='tankstelle'></div>");
+        $div = $sidebar.find('#id'+g["id"]);
+
+        $div.append("<p><h4>"+g["name"]+"</h4></p>"); 
+        $div.append("<p><span class='small'>"+g["address"]+"</span></p>"); 
+        if(g["price_die"] != null)
+          $div.append("<p><b>Diesel:</b> "+g["price_die"]+"€</p>"); 
+        else
+          $div.append("<p><b>Diesel:</b> -</p>"); 
+        if(g["price_sup"] != null)
+          $div.append("<p><b>Super:</b> "+g["price_sup"]+"€</p>");
+        else
+          $div.append("<p><b>Diesel:</b> -</p>"); 
+        $div.append("<b>SHOW #</b>"+g["id"]); 
+      });
+
+      $sidebar.css('overflow','scroll');
 
     }
 
