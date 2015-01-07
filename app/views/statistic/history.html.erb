@@ -99,10 +99,10 @@ function update(e) {
       date = new Date(json[i].updated_at)
       data.labels.push(date.getDate()+"."+date.getMonth()+1+"."+date.getFullYear()+"-"+date.getHours()+":"+date.getMinutes())
 
-      data.datasets[0].data.push(json[i].minDiesel);
-      data.datasets[1].data.push(json[i].minPetrol);
-      data.datasets[2].data.push(json[i].averageDiesel);
-      data.datasets[3].data.push(json[i].averagePertrol);
+      data.datasets[0].data.push(json[i].min_diesel);
+      data.datasets[1].data.push(json[i].min_super);
+      data.datasets[2].data.push(json[i].average_diesel);
+      data.datasets[3].data.push(json[i].average_super);
     };
       myLineChart.Line(data);
 

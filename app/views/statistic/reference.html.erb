@@ -45,7 +45,7 @@
   <% for city in  ReferenceCities.all() %>
 
   // first set the center point of the marker
-  var latlng = new google.maps.LatLng(<%= city.latLocation%>, <%= city.lngLocation%>);
+  var latlng = new google.maps.LatLng(<%= city.lat_location%>, <%= city.lng_location%>);
   // now, create the marker
   var marker = new google.maps.Marker({
     position: latlng,
