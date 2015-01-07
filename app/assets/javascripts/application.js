@@ -23,8 +23,8 @@
 
   function get_route()
   {
-      var origin = escape($('#origin').val());
-      var destination = escape($('#destination').val());
+      var origin = encodeURI($('#origin').val());
+      var destination = encodeURI($('#destination').val());
 
       $.getJSON( "/route/"+origin+"/"+destination+".json", function() {})
       .done(function(data){
@@ -66,6 +66,18 @@
     for(i=0; i<polylines.length;i++)
     {
       polylines[i].setMap(null);
+    }
+
+    var marker;
+
+    var x = Math.round(path.length / (data["distance"]/ 1000 / 50) );
+
+    for(i = 0; i < path.length; i+=x)
+    {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(path[i][0], path[i][1]),
+        map: map
+      }); 
     }
 
 // var marker1 = new google.maps.Marker({
