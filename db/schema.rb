@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150106230649) do
+ActiveRecord::Schema.define(version: 20150107133356) do
+
+  create_table "garages", force: true do |t|
+    t.float    "lat",         limit: 24
+    t.float    "lng",         limit: 24
+    t.text     "description"
+    t.float    "price_die",   limit: 24
+    t.float    "price_sup",   limit: 24
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "price_data", force: true do |t|
     t.integer  "cityFk"
