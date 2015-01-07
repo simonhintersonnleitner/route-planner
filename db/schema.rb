@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107143446) do
+ActiveRecord::Schema.define(version: 20150107173530) do
 
   create_table "garages", force: true do |t|
     t.string   "lat"
@@ -21,6 +21,9 @@ ActiveRecord::Schema.define(version: 20150107143446) do
     t.float    "price_sup",   limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "address"
+    t.text     "opening"
+    t.string   "name"
   end
 
   create_table "price_data", force: true do |t|

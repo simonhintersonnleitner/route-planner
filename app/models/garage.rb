@@ -9,7 +9,10 @@ class Garage < ActiveRecord::Base
         self.price_sup = json["spritPrice"][0]["amount"].to_f
       end
 
-      self.description = json["address"]
+      self.address = json["address"]
+      self.opening = json["opening_hours"]
+      self.description = json["serviceText"]
+      self.name = json["gasStationName"]
 
       self.save
 
