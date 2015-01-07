@@ -112,7 +112,6 @@
         }
       }) 
       .fail(function() {    
-        alert("Leider ist beim Abruf der Tankstellen ein Fehler aufgetreten. Bitte versuchen Sie es erneut!"); 
         if(last==true) stopLoading();
       });      
     }

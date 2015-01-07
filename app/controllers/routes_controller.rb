@@ -14,4 +14,9 @@ class RoutesController < ApplicationController
 
   end
 
+  def get_route
+    @route = Route.find(params[:id])
+    render 'index'
+  end
+
 end

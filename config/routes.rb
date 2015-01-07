@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'statistic/getCityDataByIdSortedByWeekday/:cityId' => 'statistic#get_city_price_per_weekday_by_id'
 
   get 'route/:origin/:destination' => 'routes#get_json', format:true
+  get 'route/:id' => 'routes#get_route'
   # :constraints => http://stackoverflow.com/questions/5621351/handle-rails-route-with-gps-parameter
   get 'garage/:lat/:lng' => 'garages#get_json', format:true, :constraints => {:lat => /\-*\d+.\d+/ , :lng => /\-*\d+.\d+/ , :range => /\d+/}
 
@@ -26,5 +27,7 @@ Rails.application.routes.draw do
   get 'login', to: 'users#login'
   post 'login', to: 'users#authenticate'
   get 'logout', to: 'users#logout'
+
+  get 'test/:id', to: 'users#test'
 
 end

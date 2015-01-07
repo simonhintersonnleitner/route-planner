@@ -37,7 +37,7 @@
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav main">
 
-							<% if(params[:controller] == "welcome") %>
+							<% if(params[:controller] == "welcome" || params[:controller] == "routes") %>
 								<li class="active"><%= link_to "Routenplaner", root_path %></li>
 							<% else %>
 								<li><%= link_to "Routenplaner", root_path %></li>

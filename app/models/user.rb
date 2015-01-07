@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
 
   before_save :encrypt_password
+  has_and_belongs_to_many :routes
   
   #attr_accessor :password
 
