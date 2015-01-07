@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 20150107175837) do
     t.datetime "updated_at"
     t.float    "lngLocation",  limit: 24
     t.float    "latLocation",  limit: 24
+    t.float    "maxDiesel",    limit: 24
+    t.float    "maxPetrol",    limit: 24
   end
 
   create_table "routes", force: true do |t|
