@@ -138,8 +138,8 @@
       $sidebar.text("");
 
       $sidebar.append("<a href='#"+id+"' class='col-xs-12 col-md-12 add-route'><span class='glyphicon glyphicon-resize-plus' aria-hidden='true'></span> Route zum Account hinzufügen</a>");
-      $sidebar.append("<a href='javascript:sort_diesel();' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Diesel-Preis</a>");
-      $sidebar.append("<a href='javascript:sort_super();' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Super-Preis</a>");
+      $sidebar.append("<a id='dieselSort' href='javascript:sort_diesel();' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Diesel-Preis</a>");
+      $sidebar.append("<a id='superSort' href='javascript:sort_super();' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Super-Preis</a>");
 
       data.forEach(function(g)
       {
@@ -172,14 +172,16 @@
 
     function sort_diesel()
     {
-      console.log("Sort by Diesel");
+      $('#superSort').removeClass('active');
+      $('#dieselSort').addClass('active');      
       garages.sort(sort_by_diesel);
       draw_sidebar();
     }
 
     function sort_super()
     {
-      console.log("Sort by Super");
+      $('#dieselSort').removeClass('active');
+      $('#superSort').addClass('active');
       garages.sort(sort_by_super);
       draw_sidebar();
     }
