@@ -31,6 +31,7 @@ gem 'bcrypt', require: "bcrypt"
 
 gem 'polylines'
 
+gem 'thin'
 
 gem 'capistrano'
 
