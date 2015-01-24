@@ -48,6 +48,7 @@ test:
 #
 production:
   <<: *default
+  socket:  /var/run/mysqld/mysqld.sock
   database: routenplaner_production
   username: root
   password: 7mcGhlIi6m
