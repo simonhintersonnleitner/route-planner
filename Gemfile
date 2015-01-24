@@ -31,6 +31,10 @@ gem 'bcrypt', require: "bcrypt"
 
 gem 'polylines'
 
+
+gem 'capistrano'
+
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

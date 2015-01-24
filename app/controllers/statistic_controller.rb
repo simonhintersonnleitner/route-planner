@@ -18,10 +18,12 @@ class StatisticController < ApplicationController
 	end
 
 	def minMax
-				#save_price_for_all_cities
-				#render :json => 				PriceData.clean
-				#render :json => PriceData.get_cheaptest_petrol_price
+			
 	end
+
+  def averange
+      
+  end
 
 	def save
 		render :text => save_price_for_all_cities

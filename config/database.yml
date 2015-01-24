@@ -49,5 +49,5 @@ test:
 production:
   <<: *default
   database: routenplaner_production
-  username: admin
-  password: sql
+  username: root
+  password: 7mcGhlIi6m

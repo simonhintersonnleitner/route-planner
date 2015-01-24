@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'statistic/history' => 'statistic#history'
   get 'statistic/weekday' => 'statistic#weekday'
   get 'statistic/minMax' => 'statistic#minMax'
+  get 'statistic/averange' => 'statistic#averange'
   get 'statistic/reference' => 'statistic#reference'
 
   get 'statistic/save' => 'statistic#save'
