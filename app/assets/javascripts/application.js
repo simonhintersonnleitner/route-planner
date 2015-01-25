@@ -23,6 +23,7 @@
       garages   = [],
       loading   = false,
       id        = 0;
+  var distance = 0, hours = 0, minutes = 0;
 
   function get_route()
   {
@@ -39,9 +40,14 @@
 
       $.getJSON( "/route/"+origin+"/"+destination+".json", function() {})
       .done(function(data){
-        if(data["distance"] == 0) alert("Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!"); 
+        if(data["route"]["distance"] == 0) alert("Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!"); 
         else {
           id = data["route"]["id"];
+
+          distance = Math.round(data["route"]["distance"] / 1000);
+          hours = Math.round(data["route"]["time"] / 3600);
+          minutes = Math.round((data["route"]["time"]-hours*3600)/60);
+
           startLoading();
           draw_route(data["route"]);
           if(data["weather"] != null) draw_weather(data["weather"]);
@@ -62,12 +68,12 @@
 
     for(i = 0; i < data["businesses"].length; i++)
     {
-      console.log(data["businesses"][i]);
 
-      $div.append("<div class='hotel'><b>"+data["businesses"][i]["name"]+"</b><br><span class='small'>"+data["businesses"][i]["location"]["address"][0]+", Bewertung: "+data["businesses"][i]["rating"] + " / 5</span></div>");
+      $div.append("<div class='hotel'><b><a target='_blank' href='"+data["businesses"][i]["url"]+"'>"+data["businesses"][i]["name"]+"</a></b><br><span class='small'>"+data["businesses"][i]["location"]["address"][0]+", Bewertung: "+data["businesses"][i]["rating"] + " / 5</span></div>");
 
     }
 
+    $div.append('<a target="_blank" href="http://www.yelp.at/search?find_desc=Hotel&find_loc='+encodeURI($('#destination').val())+'&ns=1">Weitere Hotels bei Yelp</a>');
 
   }
 
@@ -77,7 +83,12 @@
     $div.show(1000);
     $div.text("");
     $div.append('<h3>'+$('#destination').val()+'</h3>');
-    $div.append(data["icon"]);
+      $div.append('<div class="small">Entfernung: '+distance+'km</span></div>');
+    if(hours == 1)
+      $div.append('<div class="small">Fahrzeit: '+hours+' Stunde, '+ minutes +' Minuten</div>');
+    else
+      $div.append('<div class="small">Fahrzeit: '+hours+' Stunden, '+ minutes +' Minuten</div>');
+    $div.append('<img src="/assets/weather/'+data["icon"]+'.png" alt="'+data["icon"]+'">');
     $div.append('<div class="temperature">'+data["temperature"]+"°C</div>");
   }
 
@@ -193,6 +204,8 @@
       draw_garages_to_sidebar(garages);
     }
 
+
+
     function draw_garages_to_sidebar(data)
     {
       $sidebar = $('#sidebar');
@@ -209,8 +222,6 @@
         if($.grep(all, function(o){ return o.id == g.id; }).length == 0)
           all.push(g);
       });
-
-      console.log(all);
 
       all.forEach(function(g)
       {
