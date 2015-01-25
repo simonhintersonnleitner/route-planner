@@ -57,8 +57,11 @@
   function draw_weather(data)
   {
     $div = $("#weather");
-    $div.show();
-    $div.text("BLABLABLA");
+    $div.show(1000);
+    $div.text("");
+    $div.append('<h3>'+$('#origin').val()+'</h3>');
+    $div.append(data["icon"]);
+    $div.append(data["temperature"]+"°C");
   }
 
   function draw_route(data)
