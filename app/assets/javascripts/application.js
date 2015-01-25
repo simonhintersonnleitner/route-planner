@@ -45,7 +45,7 @@
           id = data["route"]["id"];
 
           distance = Math.round(data["route"]["distance"] / 1000);
-          hours = Math.round(data["route"]["time"] / 3600);
+          hours = Math.floor(data["route"]["time"] / 3600);
           minutes = Math.round((data["route"]["time"]-hours*3600)/60);
 
           startLoading();
