@@ -290,6 +290,7 @@ body.loading .modal {
 
 #weather {
   position:absolute;
+  text-align:center;
   right:20px;
   top:40px;
   background:#fefefe;

@@ -59,9 +59,9 @@
     $div = $("#weather");
     $div.show(1000);
     $div.text("");
-    $div.append('<h3>'+$('#origin').val()+'</h3>');
+    $div.append('<h3>'+$('#destination').val()+'</h3>');
     $div.append(data["icon"]);
-    $div.append(data["temperature"]+"°C");
+    $div.append('<div class="temperature">'+data["temperature"]+"°C</div>");
   }
 
   function draw_route(data)
