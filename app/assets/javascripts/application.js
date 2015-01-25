@@ -214,8 +214,8 @@
       $sidebar.text("");
 
       $sidebar.append("<a href='/route/add/"+id+"' class='col-xs-12 col-md-12 add-route'><span class='glyphicon glyphicon-resize-plus' aria-hidden='true'></span> Route zum Account hinzufügen</a>");
-      $sidebar.append("<a id='dieselSort' href='javascript:sort_diesel(\""+div+"\");' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Diesel-Preis</a>");
-      $sidebar.append("<a id='superSort' href='javascript:sort_super(\""+div+"\");' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Super-Preis</a>");
+      $sidebar.append("<a id='dieselSort' href='javascript:sort_diesel(\""+div+"\");' class='col-xs-6 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Diesel-Preis</a>");
+      $sidebar.append("<a id='superSort' href='javascript:sort_super(\""+div+"\");' class='col-xs-6 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Super-Preis</a>");
 
       var all = [];
 
@@ -403,3 +403,44 @@
       $(".overlay").hide();    
       $("#garageModal").hide();    
     }
+
+  $(document).ready(function(){
+
+    $("#origin,#destination").keyup(function(event){
+      if(event.keyCode == 13){
+          get_route();
+          closeGarage();
+      }
+    });
+    $("#searchbutton").on('click',function(){
+      get_route();
+      closeGarage();
+    });
+    
+    $(document).on('keyup',"#origin2,#destination2",function(event){
+      if(event.keyCode == 13){
+          $('#origin').val($('#origin2').val());
+          $('#destination').val($('#destination2').val());
+          get_route();
+          closeGarage();
+      }
+    });
+
+    $(document).on('click',"#searchbutton2",function(){
+      $('#origin').val($('#origin2').val());
+      $('#destination').val($('#destination2').val());
+      get_route();
+      closeGarage();
+    });
+
+    $("#toggleNav").on('click',function(){
+      $('nav').slideToggle();
+      $(this).toggleClass('active',500);
+    });
+
+    $('.overlay').on('click',function(){
+      closeGarage();
+    });  
+
+  });
+

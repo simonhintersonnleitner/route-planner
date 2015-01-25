@@ -37,20 +37,78 @@
   z-index:999;
 }
 
-.navbar{
-	padding:0px;
+a.navbar-brand {
+  color:#ffffff !important;
+  padding-top:20px;
 }
 
-.navbar-default .navbar-nav>li>a
-{
-	color: #fff;	
+.navbar, .navbar-collapse {
+	padding:0px;
+  overflow:hidden;
 }
+
+.navbar-right {
+  padding-right:15px;
+  margin:0 !important;
+}
+
+.navbar-nav, .container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
+  margin:0;
+}
+
+.navbar-toggle {
+  background:#dddddd;
+}
+
+.container-fluid {
+  padding: 0 !important;
+}
+
+.form-group {
+  padding:5px 0px;
+}
+
+.form-group button {
+  width:100%;
+}
+
+.navbar ul {
+  padding: 0 !important;
+}
+
+.row {
+  margin:0 !important;
+}
+
+.navbar-collapse {
+  width:100%;
+  margin:0;
+  z-index:999;
+  border:none;
+}
+
+.navbar-default .navbar-nav > li, .navbar-default .navbar-nav > li >a
+{
+	color: #ffffff;
+  height:100%;
+}
+
+.navbar-default .navbar-nav > li > a {
+  padding:20px;
+}
+
+.navbar-form {
+  padding-top:10px;
+}
+
 .navbar-default
 {
 	background-color: #ed4514;
   margin:0;
   box-shadow:0px 0px 15px #843822;
-  border-bottom:0px;  
+  border:0px;
+  padding:0px 10px;  
+  z-index:9999;
 }
 
 .input-group
@@ -71,16 +129,35 @@
 #toggleNav {
   position:absolute;
   right:5px;
-  top:85px;
+  top:50px;
   color:#fff;
-  z-index:9999;
+  z-index:10000;
   background-color: #ed4514;
   border-radius:20px;
   padding:5px 10px;
 }
 
+#showConfig {
+  display:none;
+}
+
 #toggleNav.active {
   top:-10px;
+}
+
+@media (max-width:1250px) {
+  #toggleNav, .navbar-right {
+    display:none;
+  }
+  #showConfig {
+    display:block;
+  }
+  .navbar-default {
+      padding:0px !important;  
+  }
+  #weather {
+    display:none !important;
+  }
 }
 
 div#navbar ul.main li {
@@ -92,11 +169,11 @@ div#navbar ul.main li a {
   border-right:1px solid #ed4514;
 }
 
-div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
-  background:#ef5817;
+.navbar li.active a, .navbar li:hover a {
+  background:#ef5817 !important;
   height:100%;
   border-bottom:5px solid #fe832c;
-  color:#fff;
+  color:#fff !important;
   border-right:1px solid #ed4514;
 }
 
@@ -179,7 +256,8 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
 }
 
 .tankstelle {
-  border-bottom:1px solid red;
+  border-bottom:1px solid #fe832c;
+  background:#fafafa;
   width:100%;
   padding:10px 5px;
 }
@@ -215,7 +293,7 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
 .modal, .overlay{
   display: none;
   position: fixed;
-  z-index: 999;
+  z-index: 999999;
   top: 0;
   left: 0;
   height: 100%;
@@ -238,7 +316,7 @@ body.loading .modal {
   text-align:center;
   box-shadow:0px 0px 10px #111;
   display:none;
-  z-index:9999;
+  z-index:99999;
   position:absolute;
   top:20%;
   margin-left: auto;

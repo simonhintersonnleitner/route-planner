@@ -48,12 +48,6 @@
 
   }
 
-  $("#origin,#destination").keyup(function(event){
-    if(event.keyCode == 13){
-        get_route();
-    }
-  });
-
   $("#origin").val("<%= @route.origin %>");
   $("#destination").val("<%= @route.destination %>");
 
