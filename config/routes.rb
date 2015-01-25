@@ -33,4 +33,6 @@ Rails.application.routes.draw do
   get 'route/remove/:id', to: 'users#remove_route'
   get 'dashboard', to: 'users#dashboard'
 
+  get 'near', to: 'garages#near'
+
 end

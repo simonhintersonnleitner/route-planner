@@ -6,7 +6,6 @@ class GaragesController < ApplicationController
   json = nil;
 
   def get_json
-    #@garage = Garage.find_or_create_by()
 
     types = ["DIE","SUP"]
     garages = []
@@ -38,6 +37,9 @@ class GaragesController < ApplicationController
       }
     end
 
+  end
+
+  def near
   end
 
 end

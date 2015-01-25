@@ -130,9 +130,9 @@
     // Tankstellen finden
     for(i = 0; i < path.length-1; i+=x)
     {    
-      get_garages(path[i][0],path[i][1],false);
+      get_garages(path[i][0],path[i][1],false,true,'sidebar');
     }
-    get_garages(path[path.length-1][0],path[path.length-1][1],true);
+    get_garages(path[path.length-1][0],path[path.length-1][1],true,true,'sidebar');
 
     // Ladebildschirm stoppen
     //stopLoading();
@@ -143,15 +143,16 @@
 
   }
 
-    function get_garages(lat,lng,last)
+    function get_garages(lat,lng,last,map,div)
     {
       $.getJSON( "/garage/"+lat+"/"+lng+".json", function() {})
       .done(function(data){       
         garages = $.merge(garages, data); 
-        draw_garages_to_map(data);
+        if(map==true)
+          draw_garages_to_map(data);
         if(last==true){
           stopLoading();
-          draw_garages_to_sidebar(garages);
+          draw_garages_to_div(garages,div);
         }
       }) 
       .fail(function() {    
@@ -199,21 +200,22 @@
       });
     }
 
-    function draw_sidebar()
+    function draw_sidebar(div)
     {
-      draw_garages_to_sidebar(garages);
+      draw_garages_to_div(garages,div);
     }
 
 
 
-    function draw_garages_to_sidebar(data)
+    function draw_garages_to_div(data,div)
     {
-      $sidebar = $('#sidebar');
+
+      $sidebar = $('#'+div);
       $sidebar.text("");
 
       $sidebar.append("<a href='/route/add/"+id+"' class='col-xs-12 col-md-12 add-route'><span class='glyphicon glyphicon-resize-plus' aria-hidden='true'></span> Route zum Account hinzufügen</a>");
-      $sidebar.append("<a id='dieselSort' href='javascript:sort_diesel();' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Diesel-Preis</a>");
-      $sidebar.append("<a id='superSort' href='javascript:sort_super();' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Super-Preis</a>");
+      $sidebar.append("<a id='dieselSort' href='javascript:sort_diesel(\""+div+"\");' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Diesel-Preis</a>");
+      $sidebar.append("<a id='superSort' href='javascript:sort_super(\""+div+"\");' class='col-xs-12 col-md-6 button'><span class='glyphicon glyphicon-resize-vertical' aria-hidden='true'></span> Super-Preis</a>");
 
       var all = [];
 
@@ -321,16 +323,21 @@
           showGarage(g["id"]);
         });
 
-        $( "#id"+g["id"] ).hover( function(){
-          markers[g["id"]].setAnimation(google.maps.Animation.BOUNCE);
-        }, function(){
-          markers[g["id"]].setAnimation(null);
-        } );
+        if(div == 'sidebar')
+        {
+
+          $( "#id"+g["id"] ).hover( function(){
+            markers[g["id"]].setAnimation(google.maps.Animation.BOUNCE);
+          }, function(){
+            markers[g["id"]].setAnimation(null);
+          } );
+
+        }
 
 
       });
 
-      $sidebar.css('overflow','scroll');
+      if(div == 'sidebar') $sidebar.css('overflow','scroll');
 
     }
 
@@ -341,20 +348,21 @@
       });
     }
 
-    function sort_diesel()
+    function sort_diesel(div)
     {
       $('#superSort').removeClass('active');
       $('#dieselSort').addClass('active');      
       garages.sort(sort_by_diesel);
-      draw_sidebar();
+      console.log(div);
+      draw_sidebar(div);
     }
 
-    function sort_super()
+    function sort_super(div)
     {
       $('#dieselSort').removeClass('active');
       $('#superSort').addClass('active');
       garages.sort(sort_by_super);
-      draw_sidebar();
+      draw_sidebar(div);
     }
 
     function sort_by_diesel(a, b){

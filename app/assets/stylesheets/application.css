@@ -113,13 +113,18 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
   padding:0px !important;
 }
 
-#sidebar a.button {
+#sidebar a.button, #garages_near a.button {
   text-align:center;
   background:#eeeeee;
+  padding-bottom:5px;
   margin:0px 0px 15px 0px;
 }
 
-#sidebar a.button.active {
+#sidebar a.button.col-md-6, #garages_near a.button.col-md-6 {
+  
+}
+
+#sidebar a.button.active, #garages_near a.button.active {
   font-weight:bold;
 }
 
@@ -130,7 +135,7 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
   padding:10px 0px;
 }
 
-#sidebar a.button span {
+#sidebar a.button span, #garages_near a.button span {
   margin:10px 0px;
 }
 
@@ -236,7 +241,10 @@ body.loading .modal {
   z-index:9999;
   position:absolute;
   top:20%;
-  left:50%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
   background:#fff;
 }
 
@@ -326,3 +334,8 @@ body.loading .modal {
   text-align:left;
   padding:5px 15px;
 }
+
+#garages_near .add-route {
+  display:none;
+}
+

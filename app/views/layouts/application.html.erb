@@ -47,7 +47,15 @@
 							<% else %>
 								<li>
 							<% end %>
+
 							<%= link_to "Statistiken", controller: "statistic", action: "history" %></li>
+
+							<% if(params[:controller] == "garages" && params[:action] == "near") %>
+								<li class="active">
+							<% else %>
+								<li>
+							<% end %>
+							<%= link_to "In der Nähe", controller: "garages", action: "near" %></li>
 
 							<% if(isLoggedIn() == true) %>
 
@@ -129,7 +137,7 @@ $(document).ready(function() {
 
 <div class="overlay"></div>
 
-<div id="garageModal">ASDASD</div>
+<div id="garageModal" class="col-xs-12 col-md-6"></div>
 
 
 
