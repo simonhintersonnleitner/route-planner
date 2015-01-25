@@ -8,7 +8,9 @@ class RoutesController < ApplicationController
 
         @route.path = Polylines::Decoder.decode_polyline(@route.path)
 
-        render :json => @route.to_json(:except => [:created_at,:updated_at])
+        weather = Weather::get_weather(@route.path.last)
+
+        render :json => { :route => @route.as_json(:except => [:created_at,:updated_at]), :weather => weather }
       }
     end
 

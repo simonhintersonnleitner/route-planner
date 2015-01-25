@@ -41,9 +41,10 @@
       .done(function(data){
         if(data["distance"] == 0) alert("Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!"); 
         else {
-          id = data["id"];
+          id = data["route"]["id"];
           startLoading();
-          draw_route(data);
+          draw_route(data["route"]);
+          if(data["weather"] != null) draw_weather(data["weather"]);
         }
       }) 
       .fail(function() {    
@@ -51,6 +52,13 @@
         stopLoading();
       });
 
+  }
+
+  function draw_weather(data)
+  {
+    $div = $("#weather");
+    $div.show();
+    $div.text("BLABLABLA");
   }
 
   function draw_route(data)

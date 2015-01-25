@@ -27,6 +27,8 @@ class Route < ActiveRecord::Base
     result = open(@@url + "?" + options.to_query).read
     json = JSON.parse(result)
 
+    weather = Weather::get_weather()
+
     # update data
     update_data(json)
 
