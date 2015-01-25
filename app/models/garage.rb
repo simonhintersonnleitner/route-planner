@@ -10,9 +10,10 @@ class Garage < ActiveRecord::Base
       end
 
       self.address = json["address"]
-      self.opening = json["opening_hours"]
+      self.opening = json["openingHours"]
       self.description = json["serviceText"]
       self.name = json["gasStationName"]
+      self.open = json["open"]
 
       self.save
 

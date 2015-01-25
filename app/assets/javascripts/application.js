@@ -121,7 +121,7 @@
     {
       $.getJSON( "/garage/"+lat+"/"+lng+".json", function() {})
       .done(function(data){       
-        garages = $.merge(garages, data);
+        garages = $.merge(garages, data); 
         draw_garages_to_map(data);
         if(last==true){
           stopLoading();
@@ -134,6 +134,22 @@
     }
 
     var markers = [];
+
+    function calculate_difference(price,t)
+    {
+      var priceSum = 0, prices = 0;
+
+      for(i = 0; i < garages.length; i++)
+      {
+        if(garages[i]["price_"+t] != null){
+          priceSum  += garages[i]["price_"+t];
+          prices += 1;
+        }
+      }
+
+      return ((Math.round((1-(price/(priceSum/prices)))*100)/100)*(-100));
+
+    }
 
     function draw_garages_to_map(data)
     {
@@ -151,7 +167,8 @@
           showGarage(element['id']);
         });
 
-        markers[element['id']] = marker;
+        markers[element['id']] = marker; 
+
 
       });
     }
@@ -184,20 +201,97 @@
       {
 
 
-
-        $sidebar.append("<div id='id"+g["id"]+"' class='tankstelle'></div>");
+        if(g["open"] == 'false')
+          $sidebar.append("<div id='id"+g["id"]+"' class='tankstelle closed'></div>");
+        else
+          $sidebar.append("<div id='id"+g["id"]+"' class='tankstelle'></div>");
         $div = $sidebar.find('#id'+g["id"]);
 
         $div.append("<p><h4>"+g["name"]+"</h4></p>"); 
+        
+        if(g["open"] == 'false')
+          $div.append('<b class="small">Zurzeit geschlossen.</b>');
         $div.append("<p><span class='small'>"+g["address"]+"</span></p>"); 
-        if(g["price_die"] != null)
-          $div.append("<p><b>Diesel:</b> "+g["price_die"]+"€</p>"); 
+        
+        
+        dif_sup = calculate_difference(g['price_sup'],'sup');
+
+
+        if(g["price_die"] != null){
+          dif_die = calculate_difference(g['price_die'],'die');
+          if(dif_die >= 0) $div.append("<p><b>Diesel:</b> "+g["price_die"]+"€</p>"); 
+          else $div.append("<p><b>Diesel:</b> "+g["price_die"]+"€ <span class='guenstig'>"+ dif_die*(-1) +"% günstiger als der Durchschnitt!</span></p>");   
+        }
         else
           $div.append("<p><b>Diesel:</b> -</p>"); 
-        if(g["price_sup"] != null)
-          $div.append("<p><b>Super:</b> "+g["price_sup"]+"€</p>");
+        if(g["price_sup"] != null){
+          dif_sup = calculate_difference(g['price_sup'],'sup');
+
+          if(dif_sup >= 0) $div.append("<p><b>Super:</b> "+g["price_sup"]+"€</p>"); 
+          else $div.append("<p><b>Super:</b> "+g["price_sup"]+"€ <span class='guenstig'>"+ dif_sup*(-1) +"% günstiger als der Durchschnitt!</span></p>"); 
+        }
         else
-          $div.append("<p><b>Diesel:</b> -</p>"); 
+          $div.append("<p><b>Super:</b> -</p>"); 
+
+        console.log(calculate_difference(g['price_sup'],'sup'));
+
+        var opening = "";
+
+        g["opening"].sort(function(a,b){
+          
+          var dayA, dayB;
+
+          switch(a["day"]["dayLabel"]){
+            case "Montag":
+              dayA = 1; break;
+            case "Dienstag":
+              dayA = 2; break;
+            case "Mittwoch":
+              dayA = 3; break;
+            case "Donnerstag":
+              dayA = 4; break;
+            case "Freitag":
+              dayA = 5; break;
+            case "Samstag":
+              dayA = 6; break;
+            case "Sonntag":
+              dayA = 7; break;
+            case "Feiertag":
+              dayA = 8; break;
+            default:
+              dayA = 9;
+          }
+          switch(b["day"]["dayLabel"]){
+            case "Montag":
+              dayB = 1; break;
+            case "Dienstag":
+              dayB = 2; break;
+            case "Mittwoch":
+              dayB = 3; break;
+            case "Donnerstag":
+              dayB = 4; break;
+            case "Freitag":
+              dayB = 5; break;
+            case "Samstag":
+              dayB = 6; break;
+            case "Sonntag":
+              dayB = 7; break;
+            case "Feiertag":
+              dayB = 8; break;
+            default:
+              dayB = 9;
+          }
+
+          return dayA > dayB;
+
+        });
+
+        for(i = 0; i < g["opening"].length; i++)
+        {
+          opening = opening + g["opening"][i]["day"]["dayLabel"]+": " + g["opening"][i]["beginn"] + " - " + g["opening"][i]["end"] + "<br>";
+        }
+
+        $div.append("<div class='opening'>"+opening+"</div>");
       
         $('#id'+g["id"]).on('click',function(){
           showGarage(g["id"]);
@@ -267,7 +361,6 @@
     {
 
       $('#garageModal').html("").html($('#id'+id).html());
-
       $(".overlay").show();    
       $("#garageModal").show();  
 

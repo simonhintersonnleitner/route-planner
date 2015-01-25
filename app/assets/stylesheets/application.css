@@ -18,6 +18,7 @@
  body 
  {
   background:#fcfcfc;
+  color:#111111;
  }
 
 #logo {
@@ -178,6 +179,19 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
   padding:10px 5px;
 }
 
+.tankstelle .opening {
+  display:none;
+}
+
+.tankstelle.closed {
+  color:#666666;
+}
+
+
+.tankstelle.closed b.small {
+  color:red;
+}
+
 .tankstelle:hover {
   background:#FFD699;
   cursor:pointer;
@@ -185,6 +199,12 @@ div#navbar ul.main li.active a, div#navbar ul.main li:hover a {
 
 .tankstelle:last-child {
   margin-bottom:100px;
+}
+
+.guenstig {
+  font-size:80%;
+  font-weight:bold;
+  color:green;
 }
 
 .modal, .overlay{
