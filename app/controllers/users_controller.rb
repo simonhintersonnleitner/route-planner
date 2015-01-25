@@ -10,9 +10,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash[:success] = "User erfolgreich angelegt."
+      flash.now[:success] = "User erfolgreich angelegt."
     else
-      flash[:error] = "Es ist ein Fehler aufgetreten!"
+      flash.now[:error] = "Es ist ein Fehler aufgetreten!"
     end
 
     render "new"
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
       session[:userID] = user.id
       redirect_to :action => "dashboard"
     else
-      flash[:error] = "Benutzername oder Passwort falsch"
+      flash.now[:error] = "Benutzername oder Passwort falsch"
       render "login"  
     end
   end
@@ -48,12 +48,12 @@ class UsersController < ApplicationController
     @route = Route.find(params[:id]) if Route.exists?(params[:id])
 
     if(@route == nil)
-      flash[:error] = "Diese Route konnte nicht gefunden werden."
+      flash.now[:error] = "Diese Route konnte nicht gefunden werden."
     elsif(@user.routes.exists?(params[:id]))
-      flash[:error] = "Diese Route hast du bereits hinzugefügt!"
+      flash.now[:error] = "Diese Route hast du bereits hinzugefügt!"
     else
       @user.routes.push(@route)
-      flash[:success] = "Route erfolgreich hinzugefügt!"
+      flash.now[:success] = "Route erfolgreich hinzugefügt!"
     end
 
     render 'dashboard'
@@ -66,12 +66,12 @@ class UsersController < ApplicationController
     @route = Route.find(params[:id]) if Route.exists?(params[:id])
 
     if(@route == nil)
-      flash[:error] = "Diese Route konnte nicht gefunden werden."
+      flash.now[:error] = "Diese Route konnte nicht gefunden werden."
     elsif(!@user.routes.exists?(params[:id]))
-      flash[:error] = "Diese Route ist nicht mit deinem Profil verknüpft!"
+      flash.now[:error] = "Diese Route ist nicht mit deinem Profil verknüpft!"
     else
       @user.routes.delete(@route)
-      flash[:success] = "Route erfolgreich entfernt."
+      flash.now[:success] = "Route erfolgreich entfernt."
     end
 
     render 'dashboard'
