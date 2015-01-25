@@ -10,7 +10,9 @@ class RoutesController < ApplicationController
 
         weather = Weather::get_weather(@route.path.last)
 
-        render :json => { :route => @route.as_json(:except => [:created_at,:updated_at]), :weather => weather }
+        hotel_parameters = { term: "hotel", limit: 3 }
+
+        render :json => { :route => @route.as_json(:except => [:created_at,:updated_at]), :weather => weather, :hotels => Yelp.client.search(params[:destination], hotel_parameters).as_json }
       }
     end
 

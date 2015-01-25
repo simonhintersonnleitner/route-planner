@@ -45,12 +45,29 @@
           startLoading();
           draw_route(data["route"]);
           if(data["weather"] != null) draw_weather(data["weather"]);
+          if(data["hotels"] != null) draw_hotels(data["hotels"]["hash"]);
         }
       }) 
       .fail(function() {    
         alert("Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!"); 
         stopLoading();
       });
+
+  }
+
+  function draw_hotels(data)
+  {
+    $div = $("#weather");
+    $div.append('<h4>Hotels in der Umgebung</h4>');
+
+    for(i = 0; i < data["businesses"].length; i++)
+    {
+      console.log(data["businesses"][i]);
+
+      $div.append("<div class='hotel'><b>"+data["businesses"][i]["name"]+"</b><br><span class='small'>"+data["businesses"][i]["location"]["address"][0]+", Bewertung: "+data["businesses"][i]["rating"] + " / 5</span></div>");
+
+    }
+
 
   }
 
@@ -71,8 +88,6 @@
         bounds = data["bounds"]
 
     var coordinates = [];
-
-    console.log(data);
 
     for (i = 0; i < path.length; i++) {
       coordinates.push(new google.maps.LatLng(path[i][0], path[i][1]));
@@ -232,8 +247,6 @@
         }
         else
           $div.append("<p><b>Super:</b> -</p>"); 
-
-        console.log(calculate_difference(g['price_sup'],'sup'));
 
         var opening = "";
 

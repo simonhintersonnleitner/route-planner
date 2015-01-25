@@ -319,3 +319,9 @@ body.loading .modal {
   display:none;
   width:300px;
 }
+
+#weather .hotel {
+  width:100%;
+  text-align:left;
+  padding:5px 15px;
+}
