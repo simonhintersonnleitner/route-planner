@@ -28,31 +28,29 @@ ActiveRecord::Schema.define(version: 20150125135430) do
   end
 
   create_table "price_data", force: true do |t|
-    t.integer  "cityFk"
-    t.float    "minDiesel",      limit: 24
-    t.float    "minPetrol",      limit: 24
-    t.float    "averageDiesel",  limit: 24
-    t.float    "averagePertrol", limit: 24
+    t.integer  "city_fk"
+    t.float    "min_diesel",     limit: 24
+    t.float    "min_super",      limit: 24
+    t.float    "max_diesel",     limit: 24
+    t.float    "max_super",      limit: 24
+    t.float    "average_diesel", limit: 24
+    t.float    "average_super",  limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "maxPetrol",      limit: 24
-    t.float    "maxDiesel",      limit: 24
   end
 
   create_table "reference_cities", force: true do |t|
     t.string   "region"
     t.string   "state"
     t.string   "name"
-    t.float    "latNorthEast", limit: 24
-    t.float    "lngNorthEast", limit: 24
-    t.float    "latSouthWest", limit: 24
-    t.float    "lngSouthWest", limit: 24
+    t.float    "lat_north_east", limit: 24
+    t.float    "lng_north_east", limit: 24
+    t.float    "lat_south_west", limit: 24
+    t.float    "lng_south_west", limit: 24
+    t.float    "lat_location",   limit: 24
+    t.float    "lng_location",   limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "lngLocation",  limit: 24
-    t.float    "latLocation",  limit: 24
-    t.float    "maxDiesel",    limit: 24
-    t.float    "maxPetrol",    limit: 24
   end
 
   create_table "routes", force: true do |t|
