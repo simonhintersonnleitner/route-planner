@@ -11,7 +11,7 @@
 
 #adding reference Cities to db
 
-referenceCities = [
+reference_cities = [
 	"Bregenz",
 	"Innsbruck","Salzburg","Klagenfurt","Graz",
 	"Linz","Wien","Eisenstadt","Zirl","Zell am See",
@@ -81,7 +81,7 @@ referenceCities = [
 	"St. Andrä",	
 	"Groß-Enzersdorf"] 
 
-for i in referenceCities
+for i in reference_cities
 
 	uri2 = 'http://maps.googleapis.com/maps/api/geocode/json?language=de&address=' + i
 
