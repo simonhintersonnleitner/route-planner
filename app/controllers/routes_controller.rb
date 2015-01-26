@@ -13,8 +13,10 @@ class RoutesController < ApplicationController
   end
 
   def get_route_by_id
-    @route = Route.find(params[:id])
-    if(@route.users.exists?(session[:userID]))
+    user = User.find session[:userID]
+    @route = user.routes.find params[:id]
+    
+    if @route != nil
       render 'index'
     else
       raise ActionController::RoutingError.new('Not Found')
