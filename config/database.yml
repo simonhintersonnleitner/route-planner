@@ -13,7 +13,7 @@ default: &default
   encoding: utf8
   pool: 5
   username: root
-  password: sql
+  password: mmt-b2013
   socket:  /var/run/mysqld/mysqld.sock
 
 development:
@@ -50,4 +50,4 @@ production:
   socket:   /var/run/mysqld/mysqld.sock
   database: routenplaner_production
   username: root
-  password: 7mcGhlIi6m
+  password: mmt-b2013
