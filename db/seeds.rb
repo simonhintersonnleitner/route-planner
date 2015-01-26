@@ -103,12 +103,12 @@ for i in referenceCities
 
 		cities = ReferenceCities.find_or_initialize_by(name: i)
 		cities.name = i
-		cities.latNorthEast = latNorthEast
-		cities.lngNorthEast = lngNorthEast
-		cities.latSouthWest = latSouthWest
-		cities.lngSouthWest = lngSouthWest
-		cities.latLocation = latLocation
-		cities.lngLocation = lngLocation
+		cities.lat_north_east = latNorthEast
+		cities.lng_north_east = lngNorthEast
+		cities.lat_south_west = latSouthWest
+		cities.lng_south_west = lngSouthWest
+		cities.lat_location = latLocation
+		cities.lng_location = lngLocation
 		cities.region = decode["results"][0]["address_components"][decode["results"][0]["address_components"].length-3]["short_name"]
 		cities.state = decode["results"][0]["address_components"][decode["results"][0]["address_components"].length-2]["short_name"]
 
