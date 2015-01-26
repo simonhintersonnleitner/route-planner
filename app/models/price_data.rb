@@ -52,7 +52,7 @@ class PriceData < ActiveRecord::Base
 
         for i in 1..prices.length-1
           date1 = DateTime.parse(prices[i].updated_at.to_s)
-          date2 = DateTime.parse(priceBefore.updated_at.to_S)
+          date2 = DateTime.parse(priceBefore.updated_at.to_s)
 
           if(prices[i].min_diesel == priceBefore.min_diesel && 
             prices[i].min_super == priceBefore.min_super && 
@@ -120,11 +120,11 @@ class PriceData < ActiveRecord::Base
     end
 
     def get_min(respone)
-      return respone[0]["spritPrice"][0]["amount"].to_f
+      respone[0]["spritPrice"][0]["amount"].to_f
     end
 
     def get_max(respone)
-      return respone[4]["spritPrice"][0]["amount"].to_f
+      respone[4]["spritPrice"][0]["amount"].to_f
     end
 
     def insert(city,min_diesel,min_super,average_diesel,average_super,max_diesel,max_super)
