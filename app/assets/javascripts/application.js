@@ -406,13 +406,13 @@
 
   $(document).ready(function(){
 
-    $("#origin,#destination").keyup(function(event){
+    $(document).on('keyup',"#origin,#destination",function(event){
       if(event.keyCode == 13){
           get_route();
           closeGarage();
       }
     });
-    $("#searchbutton").on('click',function(){
+    $(document).on('click',"#searchbutton",function(){
       get_route();
       closeGarage();
     });

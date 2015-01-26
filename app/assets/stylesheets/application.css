@@ -43,8 +43,7 @@ a.navbar-brand {
 }
 
 .navbar, .navbar-collapse {
-	padding:0px;
-  overflow:hidden;
+  padding:0px;
 }
 
 .navbar-right {
@@ -169,13 +168,23 @@ div#navbar ul.main li a {
   border-right:1px solid #ed4514;
 }
 
-.navbar li.active a, .navbar li:hover a {
+.navbar .open a {
+  border:none !important;
+}
+.navbar-nav > li.active > a, .navbar-nav > li:hover > a, .navbar .open > li > a {
   background:#ef5817 !important;
   height:100%;
-  border-bottom:5px solid #fe832c;
+  border-bottom:5px solid #fe832c !important;
   color:#fff !important;
   border-right:1px solid #ed4514;
 }
+
+.dropdown-menu a, .dropdobn-menu li:hover a, .dropdown-menu li a {
+  border-bottom:0px !important;
+}
+
+
+
 
 #header ul.main {
   height:100%;
@@ -241,6 +250,10 @@ div#navbar ul.main li a {
   margin:0;
   padding:0;
   width:100%;
+}
+
+.content h1, .content > div {
+  margin:15px;
 }
 
 #content {

@@ -1,5 +1,5 @@
 <div class="row">
-  <div id="mainStats" class=" stats col-xs-12 col-md-10 ">
+  <div id="mainStats" class=" stats col-xs-12 col-md-12 ">
     <h3>Aktuelle Preisübersicht</h3>
     <table id="actTable" class="tablesorter table table-striped table-hover ">
       <thead>
@@ -32,11 +32,6 @@
     <p><b>*</b> - Durchschnitt von den 5 günstigsten Tankstellen des jeweiligen Ortes/ der jeweiligen Stadt<p>
     
   </div>
-  
-  <div id="sidebar" class="col-xs-12 col-md-2">
-    <%= render partial: "sidebarLinks" %>
-  </div>
-  <div class="clear"></div>
 </div>
 <script>
   $(document).ready(function(){ $("#actTable").tablesorter(); } );

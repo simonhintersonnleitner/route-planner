@@ -33,18 +33,30 @@
 				    <!-- Collect the nav links, forms, and other content for toggling -->
 				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				      <ul class="nav navbar-nav">
+	            
 	              <% if(params[:controller] == "welcome" || params[:controller] == "routes") %>
 	                <li class="active"><%= link_to "Routenplaner", root_path %></li>
 	              <% else %>
 	                <li><%= link_to "Routenplaner", root_path %></li>
 	              <% end %>
 	              <% if(params[:controller] == "statistic") %>
-	                <li class="active">
+	                <li class="active dropdown">
 	              <% else %>
-	                <li>
+	                <li class="dropdown">
 	              <% end %>
 
-	              <%= link_to "Statistiken", controller: "statistic", action: "history" %></li>
+				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Statistiken <span class="caret"></span></a>
+				          <ul class="dropdown-menu" role="menu">
+				            <li><%= link_to "Preisübersicht", controller: "statistic", action: "actual" %></li>
+				            <li><%= link_to "Preisverlauf", controller: "statistic", action: "history" %></li>
+				            <li><%= link_to "Wochentagsauswertung", controller: "statistic", action: "weekday" %></li>
+				            <li><%= link_to "Min-Maxauswertung", controller: "statistic", action: "minMax" %></li>
+				            <li><%= link_to "Durschnittspreis", controller: "statistic", action: "averange" %></li>
+				            <li><%= link_to "Referenzorte", controller: "statistic", action: "reference" %></li>
+				          </ul>
+				        </li>
+
+	           
 
 	              <% if(params[:controller] == "garages" && params[:action] == "near") %>
 	                <li class="active">
