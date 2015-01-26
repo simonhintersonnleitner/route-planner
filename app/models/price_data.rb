@@ -4,43 +4,52 @@ class PriceData < ActiveRecord::Base
 
     def get_cheaptest_diesel_price
       min = self.minimum(:min_diesel)
-      return self.where(min_diesel: min).last
+      self.where(min_diesel: min).last
     end
+
     def get_cheaptest_super_price
       min = self.minimum(:min_super)
-      return self.where(min_super: min).last
+      self.where(min_super: min).last
     end
+
     def get_priciest_diesel_price
       max = self.maximum(:max_diesel)
-      return self.where(max_diesel: max).last
+      self.where(max_diesel: max).last
     end
-     def get_priciest_super_price
+
+    def get_priciest_super_price
       max = self.maximum(:max_super)
-      return self.where(max_super: max).last
+      self.where(max_super: max).last
     end
-     def get_cheaptest_diesel_price_by_day
+
+    def get_cheaptest_diesel_price_by_day
       min =  self.all.where(created_at: (Time.now.midnight)..(Time.now)).minimum(:min_diesel)
-      return  self.where(min_diesel: min).last
+      self.where(min_diesel: min).last
     end
+
     def get_cheaptest_super_price_by_day
-       min =  self.all.where(created_at: (Time.now.midnight)..(Time.now)).minimum(:min_super)
-      return self.where(min_super: min).last
+      min =  self.all.where(created_at: (Time.now.midnight)..(Time.now)).minimum(:min_super)
+      self.where(min_super: min).last
     end
+
     def get_priciest_diesel_price_by_day
-       max =  self.all.where(created_at: (Time.now.midnight)..(Time.now)).maximum(:max_diesel)
-      return self.where(max_diesel: max).last
+      max =  self.all.where(created_at: (Time.now.midnight)..(Time.now)).maximum(:max_diesel)
+      self.where(max_diesel: max).last
     end
+
     def get_priciest_super_price_by_day
       max =  self.all.where(created_at: (Time.now.midnight)..(Time.now)).maximum(:max_super)
-      return self.where(max_super: max).last
+      self.where(max_super: max).last
     end
 
     def clean
       count = 0
       cities = ReferenceCities.all()
+
       for city in cities
         prices = self.where(city_fk: city.id)
         priceBefore = prices[0]
+        
         for i in 1..prices.length-1
           date1 = DateTime.parse(prices[i].updated_at.to_s)
           date2 = DateTime.parse(priceBefore.updated_at.to_s)
