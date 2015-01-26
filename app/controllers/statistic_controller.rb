@@ -1,6 +1,6 @@
 class StatisticController < ApplicationController
 	require 'net/http'
-
+  
 	def actual
 	
 	end
