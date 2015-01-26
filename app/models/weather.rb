@@ -3,8 +3,7 @@ class Weather
   require 'open-uri'
   require 'json'
 
-  # TODO: API Key in secrets.yml !!!
-  @@url = 'https://api.forecast.io/forecast/a4fbff5dae93def13ba0a022248a9788/'
+  @@url = "https://api.forecast.io/forecast/#{Rails.application.secrets.forecast_api}/"
 
   def self.get_weather(destination)
 

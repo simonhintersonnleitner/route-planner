@@ -1,21 +1,15 @@
 class RoutesController < ApplicationController
 
   def index
-    @route = Route.find_or_create_by(origin: params[:origin], destination: params[:destination])
+    route = Route.find_or_create_by(origin: params[:origin], destination: params[:destination])
+    weather = Weather::get_weather(route.path.last)
+    hotel_parameters = { term: "hotel", limit: 3 }
 
     respond_to do |format|
       format.json { 
-
-        @route.path = Polylines::Decoder.decode_polyline(@route.path)
-
-        weather = Weather::get_weather(@route.path.last)
-
-        hotel_parameters = { term: "hotel", limit: 3 }
-
-        render :json => { :route => @route.as_json(:except => [:created_at,:updated_at]), :weather => weather, :hotels => Yelp.client.search(params[:destination], hotel_parameters).as_json }
+        render :json => { :route => route.as_json(:except => [:created_at,:updated_at]), :weather => weather, :hotels => Yelp.client.search(params[:destination], hotel_parameters).as_json }
       }
     end
-
   end
 
   def get_route_by_id
