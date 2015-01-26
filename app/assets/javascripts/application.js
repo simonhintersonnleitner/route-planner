@@ -373,39 +373,36 @@ function closeGarage() {
     $("#garageModal").hide();
 }
 
-$(document).ready(function() {
+var lat = 47.723818;
+var lng = 13.0869397;
 
-    var lat = 47.723818;
-    var lng = 13.0869397;
+function initialize(lat, lng) {
+    geocoder = new google.maps.Geocoder();
 
-    initialize(lat, lng);
+    var latLng = new google.maps.LatLng(lat, lng);
 
-    function initialize(lat, lng) {
-        geocoder = new google.maps.Geocoder();
+    var mapOptions = {
+        zoom: 10,
+        center: latLng
+    };
+    map = new google.maps.Map(document.getElementById('map'),
+        mapOptions);
 
-        var latLng = new google.maps.LatLng(lat, lng);
-
-        var mapOptions = {
-            zoom: 10,
-            center: latLng
-        };
-        map = new google.maps.Map(document.getElementById('map'),
-            mapOptions);
-
-        var circleOptions = {
-            strokeColor: '#888888',
-            strokeOpacity: 0,
-            strokeWeight: 2,
-            fillColor: '#888888',
-            fillOpacity: 0,
-            map: map,
-            center: latLng,
-            radius: 0
-        }
-
-        cityCircle = new google.maps.Circle(circleOptions);
-
+    var circleOptions = {
+        strokeColor: '#888888',
+        strokeOpacity: 0,
+        strokeWeight: 2,
+        fillColor: '#888888',
+        fillOpacity: 0,
+        map: map,
+        center: latLng,
+        radius: 0
     }
+
+    cityCircle = new google.maps.Circle(circleOptions);
+}
+
+$(document).ready(function() {
 
     $(document).on('keyup', "#origin,#destination", function(event) {
         if (event.keyCode == 13) {
