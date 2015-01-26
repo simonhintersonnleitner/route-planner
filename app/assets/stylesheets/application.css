@@ -409,3 +409,8 @@ body.loading .modal {
 #garages_near .add-route {
     display: none;
 }
+
+#chartWrapper
+{
+    max-height: 200px;
+}

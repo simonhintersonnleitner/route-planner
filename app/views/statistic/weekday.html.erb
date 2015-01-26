@@ -68,7 +68,7 @@ function update(e) {
 
     //reset canvas with recreating
     $("#myChart").remove();
-    $("#chartWrapper").append("<canvas id='myChart' width='1000' height='500'></canvas>");
+    $("#chartWrapper").append("<canvas id='myChart' width='100' height='100'></canvas>");
 
     var ctx = $("#myChart").get(0).getContext("2d");
     var myLineChart = new Chart(ctx); 
