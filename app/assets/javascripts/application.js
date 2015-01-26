@@ -438,7 +438,7 @@
       $(this).toggleClass('active',500);
     });
 
-    $('.overlay').on('click',function(){
+    $(document).on('click','.overlay',function(){
       closeGarage();
     });  
 
