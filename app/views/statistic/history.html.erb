@@ -89,6 +89,8 @@ function update(e) {
     for (var i = 0; i < 4; i++) 
       data.datasets[i].data = [];
 
+    Chart.defaults.global.responsive = true;
+
     //reset canvas with recreating
     $("#myChart").remove();
     $("#chartWrapper").append("<canvas id='myChart' width='1000' height='500'></canvas>");
