@@ -1,15 +1,14 @@
 class Route < ActiveRecord::Base
 
   require 'open-uri'
+
   has_and_belongs_to_many :users
 
   @@url = 'http://maps.googleapis.com/maps/api/directions/json'
 
   after_initialize do |route|
-
-    route.count_up
-
-    route.get_data if path == nil || bounds == nil
+    self.increment!(:hits)
+    route.get_data 
   end
 
   def get_data
@@ -27,52 +26,20 @@ class Route < ActiveRecord::Base
     result = open(@@url + "?" + options.to_query).read
     json = JSON.parse(result)
 
-    # update data
+    # Daten updaten
     update_data(json)
 
   end
 
   def update_data(json)
     
-    if get_status(json) == "OK"
-      set_distance(json["routes"][0]["legs"][0]["distance"]["value"])
-      set_time(json["routes"][0]["legs"][0]["duration"]["value"])
-      set_path(json["routes"][0]["overview_polyline"]["points"])
-      set_bounds(json["routes"][0]["bounds"])
+    if json["status"] == "OK"
+      self.distance = json["routes"][0]["legs"][0]["distance"]["value"]
+      self.time = json["routes"][0]["legs"][0]["duration"]["value"]
+      self.path = Polylines::Decoder.decode_polyline json["routes"][0]["overview_polyline"]["points"]
+      self.bounds = json["routes"][0]["bounds"]
     end
   
-  end
-
-  def set_distance(distance)
-    self.distance = distance
-  end
-
-  def set_bounds(bounds)
-    self.bounds = bounds  
-  end
-
-  def set_time(time)
-    self.time = time
-  end
-
-  def set_path(path)
-    self.path = path
-  end
-
-  def get_status(json)
-    json["status"]
-  end
-
-  def count_up
-    # count up hits by 1
-    if self.hits == nil  
-      self.hits = 1
-    else 
-      self.hits += 1
-    end
-
-    self.save
-
   end
 
 end

@@ -19,11 +19,10 @@ Rails.application.routes.draw do
   get 'statistic/getCityDataById/:cityId' => 'statistic#get_city_prices_by_id'
   get 'statistic/getCityDataByIdSortedByWeekday/:cityId' => 'statistic#get_city_price_per_weekday_by_id'
 
-  get 'route/:origin/:destination' => 'routes#get_json', format:true
-  get 'route/:id' => 'routes#get_route'
+  get 'route/:origin/:destination' => 'routes#index', format:true
+  get 'route/:id' => 'routes#get_route_by_id'
   # :constraints => http://stackoverflow.com/questions/5621351/handle-rails-route-with-gps-parameter
-  get 'garage/:lat/:lng' => 'garages#get_json', format:true, :constraints => {:lat => /\-*\d+.\d+/ , :lng => /\-*\d+.\d+/ , :range => /\d+/}
-  get 'garage/:path' => 'garages#get_json_by_path', format:true, :constraints => {:path => /(\-*\d+.\d+,?)*/ , :range => /\d+/}
+  get 'garage/:path' => 'garages#index', format:true, :constraints => {:path => /(\-*\d+.\d+,?)*/ , :range => /\d+/}
 
   resources :users, only: [:create,:new,:index]
   get 'login', to: 'users#login'
