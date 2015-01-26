@@ -1,6 +1,6 @@
 class RoutesController < ApplicationController
 
-  def get_json
+  def index
     @route = Route.find_or_create_by(origin: params[:origin], destination: params[:destination])
 
     respond_to do |format|
@@ -18,7 +18,7 @@ class RoutesController < ApplicationController
 
   end
 
-  def get_route
+  def get_route_by_id
     @route = Route.find(params[:id])
     if(@route.users.exists?(session[:userID]))
       render 'index'

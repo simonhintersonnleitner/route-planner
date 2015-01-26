@@ -13,21 +13,19 @@ class Garage < ActiveRecord::Base
     types.each do |t|
 
       for i in 0..array.count
+        # Nur jeder 2. Eintrag, weil lat,long,lat,long, ...
         next if i.odd?
-
-        puts array[i]
-        puts array[i+1]
-        puts "\n\n"
 
         response = Net::HTTP.post_form(@@url, "data" => "['','#{t}','#{array[i+1]}','#{array[i]}','#{array[i+1]}','#{array[i]}']")
         json = ActiveSupport::JSON.decode(response.body)
 
         for i in 0..3
           if(json[i] != nil) 
-            if json[i]["distance"].to_f <= 10
-              garage = Garage.find_or_create_by( lat:json[i]["latitude"],lng:json[i]["longitude"] )
-              garage.update_data(json[i],t)
-              garages.push (garage)
+            if json[i]["distance"].to_f <= 5
+              # Neue Tankstelle erstellen, falls noch nicht existiert
+              garage = Garage.find_or_create_by(lat: json[i]["latitude"], lng: json[i]["longitude"])
+              garage.update_data json[i],t
+              garages.push garage
             end
           end
 
@@ -37,7 +35,7 @@ class Garage < ActiveRecord::Base
 
     end
 
-    # Doppelte Tankstellen herausfiltern
+    # Doppelte Tankstellen herausfiltern (Diesel/Benzin)
     garages = garages.uniq {|o| o.id}
 
   end

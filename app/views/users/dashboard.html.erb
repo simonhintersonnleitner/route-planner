@@ -11,7 +11,7 @@
     <% @user.routes.each do |route| %>
       <div class="panel panel-default">
         <div class="panel-body">
-          <%= link_to route.origin+" -> "+route.destination, :controller => "routes", :action => "get_route", :id => route.id %> 
+          <%= link_to route.origin+" -> "+route.destination, :controller => "routes", :action => "get_route_by_id", :id => route.id %> 
 
           <div style="float:right;">
             <%= link_to "Löschen", :controller => "users", :action => "remove_route", :id => route.id %>
