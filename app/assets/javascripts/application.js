@@ -375,6 +375,38 @@ function closeGarage() {
 
 $(document).ready(function() {
 
+    var lat = 47.723818;
+    var lng = 13.0869397;
+
+    initialize(lat, lng);
+
+    function initialize(lat, lng) {
+        geocoder = new google.maps.Geocoder();
+
+        var latLng = new google.maps.LatLng(lat, lng);
+
+        var mapOptions = {
+            zoom: 10,
+            center: latLng
+        };
+        map = new google.maps.Map(document.getElementById('map'),
+            mapOptions);
+
+        var circleOptions = {
+            strokeColor: '#888888',
+            strokeOpacity: 0,
+            strokeWeight: 2,
+            fillColor: '#888888',
+            fillOpacity: 0,
+            map: map,
+            center: latLng,
+            radius: 0
+        }
+
+        cityCircle = new google.maps.Circle(circleOptions);
+
+    }
+
     $(document).on('keyup', "#origin,#destination", function(event) {
         if (event.keyCode == 13) {
             get_route();
@@ -408,6 +440,16 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.overlay', function() {
+        closeGarage();
+    });
+
+    $("#showConfig").on('click', function() {
+        $('#garageModal').html('<div class="form-group"><input type="text" id="origin2" class="form-control" placeholder="Von: Salzburg" ></div><div class="form-group"><input type="text" id="destination2" class="form-control" placeholder="Nach: Linz"></div><button id="searchbutton2" type="submit" class="btn btn-default">Suchen</button>');
+        $(".overlay").show();
+        $("#garageModal").show();
+    });
+
+    $('.overlay').on('click', function() {
         closeGarage();
     });
 

@@ -54,9 +54,7 @@
 				            <li><%= link_to "Durschnittspreis", controller: "statistic", action: "averange" %></li>
 				            <li><%= link_to "Referenzorte", controller: "statistic", action: "reference" %></li>
 				          </ul>
-				        </li>
-
-	           
+				        </li>        
 
 	              <% if(params[:controller] == "garages" && params[:action] == "near") %>
 	                <li class="active">
@@ -88,8 +86,7 @@
 				      </ul>
 				      
             <% if(params[:controller] == "welcome" || params[:controller] == "routes") %>
-
-              
+     
               <div class="navbar-form navbar-right" role="search">
                 <div class="form-group">
                     <input type="text" id="origin" class="form-control" placeholder="Von: Salzburg" >
@@ -105,10 +102,6 @@
 				    </div><!-- /.navbar-collapse -->
 				  </div><!-- /.container-fluid -->
 				</nav>
-
-
-
-
 		</header>
 		
 		<div class="container-fluid content">
@@ -133,14 +126,12 @@
 
 			<%= yield %>
 		</div>
-	
 
+		<div class="modal"></div>
 
-<div class="modal"></div>
+		<div class="overlay"></div>
 
-<div class="overlay"></div>
-
-<div id="garageModal" class="col-xs-12 col-md-6"></div>
+		<div id="garageModal" class="col-xs-12 col-md-6"></div>
 
 
 
