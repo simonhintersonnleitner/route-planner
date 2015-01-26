@@ -2,7 +2,6 @@
 
 <div id="garages_near"></div>
 
-
 <script type="text/javascript">
 
   $div = $('#garages_near');
@@ -23,13 +22,15 @@
 
     lat = position.coords.latitude;
     lng = position.coords.longitude;
-  
-    var garages = get_garages(lat,lng,true,false,'garages_near');
+
+    var garages = get_garages(lat,lng);
 
     if(garages == undefined)
     {
       $div.html("Leider wurden für Ihren Standort keine Tankstellen gefunden.");
     }
+
+    stopLoading();
 
   }
 
