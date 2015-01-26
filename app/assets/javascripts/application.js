@@ -27,6 +27,8 @@
 
   function get_route()
   {
+      startLoading();
+
       var origin = encodeURI($('#origin').val());
       var destination = encodeURI($('#destination').val());
 
@@ -48,7 +50,6 @@
           hours = Math.floor(data["route"]["time"] / 3600);
           minutes = Math.round((data["route"]["time"]-hours*3600)/60);
 
-          startLoading();
           draw_route(data["route"]);
           if(data["weather"] != null) draw_weather(data["weather"]);
           if(data["hotels"] != null) draw_hotels(data["hotels"]["hash"]);
@@ -96,9 +97,8 @@
   {
     var path   = data["path"],
         last   = path[0],
-        bounds = data["bounds"]
-
-    var coordinates = [];
+        bounds = data["bounds"],
+        coordinates = [];
 
     for (i = 0; i < path.length; i++) {
       coordinates.push(new google.maps.LatLng(path[i][0], path[i][1]));
@@ -112,14 +112,14 @@
       strokeWeight: 5
     });
 
-    // Add to polylines
-    polylines.push(polyline);
-
     // Remove old polylines
     for(i=0; i<polylines.length;i++)
     {
       polylines[i].setMap(null);
     }
+
+    // Add to polylines
+    polylines.push(polyline);
 
     // Draw on map
     polyline.setMap(map);
@@ -128,19 +128,36 @@
     var x = Math.round(path.length / (data["distance"]/ 1000 / 40) );
 
     // Tankstellen finden
+
+    var pathTankstellen = [];
+
     for(i = 0; i < path.length-1; i+=x)
     {    
-      get_garages(path[i][0],path[i][1],false,true,'sidebar');
+      //get_garages(path[i][0],path[i][1],false,true,'sidebar');
+      pathTankstellen.push(path[i][0]);
+      pathTankstellen.push(path[i][1]);
     }
-    get_garages(path[path.length-1][0],path[path.length-1][1],true,true,'sidebar');
+    //get_garages(path[path.length-1][0],path[path.length-1][1],true,true,'sidebar');
+
+    console.log(pathTankstellen);
+    garages = get_garages_by_path(pathTankstellen);
+    garages = garages["responseJSON"];
+
+    draw_garages_to_div(garages,'sidebar');
+    draw_garages_to_map(garages);
 
     // Ladebildschirm stoppen
-    //stopLoading();
+    stopLoading();
 
     map.fitBounds(new google.maps.LatLngBounds(bounds["path"]));
 
     map.setCenter(coordinates[Math.round(coordinates.length/2)]);
 
+  }
+
+  function get_garages_by_path(path)
+  {
+    return $.ajax({url: "/garage/"+path.join()+".json", success: function() {},async:false});
   }
 
     function get_garages(lat,lng,last,map,div)
