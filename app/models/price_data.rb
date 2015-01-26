@@ -49,17 +49,20 @@ class PriceData < ActiveRecord::Base
       for city in cities
         prices = self.where(city_fk: city.id)
         priceBefore = prices[0]
-        
+
         for i in 1..prices.length-1
           date1 = DateTime.parse(prices[i].updated_at.to_s)
-          date2 = DateTime.parse(priceBefore.updated_at.to_s)
+          date2 = DateTime.parse(priceBefore.updated_at.to_S)
+
           if(prices[i].min_diesel == priceBefore.min_diesel && 
             prices[i].min_super == priceBefore.min_super && 
             prices[i].average_diesel == priceBefore.average_diesel &&
             prices[i].average_super == priceBefore.average_super && 
             date1.wday == date2.wday)
+
             priceBefore.destroy
-          count += 1;
+            count += 1
+
           end
           priceBefore = prices[i];
         end 
