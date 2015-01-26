@@ -56,12 +56,14 @@ class StatisticController < ApplicationController
 	def get_response_from_api(city,type)
 		uri = URI('http://www.spritpreisrechner.at/espritmap-app/GasStationServlet')
 
-		lng_north_east = city.lng_north_east
-		lat_north_east = city.lat_north_east
+		if(city.lng_north_east != nil)
+      lng_north_east = city.lng_north_east
+  		lat_north_east = city.lat_north_east
 
-		lng_south_west = city.lng_south_west
-		lat_south_west = city.lat_south_west
-
+  		lng_south_west = city.lng_south_west
+  		lat_south_west = city.lat_south_west
+    end
+    
 		respone = Net::HTTP.post_form(uri, "data" => "['','#{type}','#{lng_north_east}','#{lat_north_east}','#{lng_south_west}','#{lat_south_west}']")
 
 		return ActiveSupport::JSON.decode(respone.body)
@@ -124,8 +126,10 @@ class StatisticController < ApplicationController
     for price in prices
       d = DateTime.parse(price.updated_at.to_s)
       sum_diesel[d.wday] += price.average_diesel
+      # save amount of values per day
       sum_diesel[d.wday+7] += 1
       sum_super[d.wday] += price.average_super
+      # save amount of values per day
       sum_super[d.wday+7] += 1
     end
 
