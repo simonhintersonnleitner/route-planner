@@ -97,6 +97,10 @@ a.navbar-brand {
     z-index: 9999;
 }
 
+ul.dropdown-menu li {
+    background:#ffffff;
+}
+
 .input-group {
     max-width: 250px;
     margin: 5px;
