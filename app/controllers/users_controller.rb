@@ -55,6 +55,7 @@ class UsersController < ApplicationController
     else
       user.routes.push(@route)
       flash[:success] = "Route erfolgreich hinzugefügt!"
+      expire_fragment("dashboard")
     end
 
     redirect_to :action => 'dashboard'
@@ -73,6 +74,7 @@ class UsersController < ApplicationController
     else
       user.routes.delete(route)
       flash[:success] = "Route erfolgreich entfernt."
+      expire_fragment("dashboard")
     end
 
     redirect_to :action => 'dashboard'
