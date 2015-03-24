@@ -23,9 +23,14 @@ class Garage < ActiveRecord::Base
           if(json[i] != nil) 
             if json[i]["distance"].to_f <= 5
               # Neue Tankstelle erstellen, falls noch nicht existiert
-              garage = Garage.find_or_create_by(lat: json[i]["latitude"], lng: json[i]["longitude"])
-              garage.update_data json[i],t
+              
+              # Doesn't work :(
+              #Rails.cache.fetch("#{json[i]["latitude"]}/#{json[i]["longitude"]}", :expires_in => 2.hours) do
+                garage = Garage.find_or_create_by(lat: json[i]["latitude"], lng: json[i]["longitude"])
+                garage.update_data json[i],t
+              #end
               garages.push garage
+
             end
           end
 
