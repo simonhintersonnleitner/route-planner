@@ -10,7 +10,8 @@ class StatisticController < ApplicationController
 	end
 
 	def weekday
-		
+	  # enable caching
+    expires_in 1.day, :public => true
 	end
 
 	def reference
